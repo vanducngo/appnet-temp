@@ -273,8 +273,13 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
     @Override
     public void onInit(int i) {
+        if(mNotificationVoice !=null )
+        {
             mNotificationVoice.setLanguage(Locale.ENGLISH);
             mNotificationVoice.stop();
+        }else{
+            showToast("Sorry, but text speed is not support in your device");
+        }
     }
 
     @SuppressWarnings("deprecation")
