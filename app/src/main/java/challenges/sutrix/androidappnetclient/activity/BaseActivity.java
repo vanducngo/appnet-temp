@@ -36,20 +36,21 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
     private TextToSpeech mNotificationVoice;
 
     //Navigation drawer
-    private Toolbar mToolBar;
-    private String TITLES[] = {"Home", "Pop", "Rock and Roll", "Country music", "Other", "My Account"};
-    private int ICONS[] = {R.drawable.ic_vocabulary, R.drawable.ic_basic_grammar, R.drawable.ic_advantage_grammar, R.drawable.ic_test, R.drawable.ic_setting, R.drawable.ic_basic_grammar};
+    private String titles[];
+    private int ICONS[] = {R.drawable.ic_vocabulary, R.drawable.ic_basic_grammar, R.drawable.ic_advantage_grammar, R.drawable.ic_test, R.drawable.ic_setting, R.drawable.ic_basic_grammar, R.drawable.ic_basic_grammar};
+
     private RecyclerView mRecyclerView; // Declaring RecyclerView
     private SlideMenuAdapter mAdapter;  // Declaring Adapter For Recycler View
     private RecyclerView.LayoutManager mLayoutManager;  // Declaring Layout Manager as a linear layout manager
     private DrawerLayout Drawer;    // Declaring DrawerLayout
-    ActionBarDrawerToggle mDrawerToggle;
+    private ActionBarDrawerToggle mDrawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mToast = new Toast(this);
         mNotificationVoice = new TextToSpeech(this, this);
+        titles = getResources().getStringArray(R.array.menu_array_string);
     }
 
     /**
@@ -57,14 +58,14 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
      */
     protected void initNavigationDrawer() {
 
-        mToolBar = (Toolbar) findViewById(R.id.card_tool_bar);
+        Toolbar mToolBar = (Toolbar) findViewById(R.id.card_tool_bar);
         setSupportActionBar(mToolBar);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.RecyclerView); // Assigning the RecyclerView Object to the xml View
 
         mRecyclerView.setHasFixedSize(true);                            // Letting the system know that the list objects are of fixed size
 
-        mAdapter = new SlideMenuAdapter(this, TITLES, ICONS);       // Creating the Adapter of MyAdapter class(which we are going to see in a bit)
+        mAdapter = new SlideMenuAdapter(this, titles, ICONS);       // Creating the Adapter of MyAdapter class(which we are going to see in a bit)
         // And passing the titles,icons,header view name, header view email,
         // and header view profile picture
 
@@ -154,7 +155,7 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
     /**
      * Show toast with a string
      *
-     * @param message
+     * @param message String message to show
      */
     protected void showToast(String message) {
         mToast.cancel();
@@ -165,7 +166,7 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
     /**
      * Show toast with a StringID
      *
-     * @param stringID
+     * @param stringID String id to show
      */
     protected void showToast(int stringID) {
         mToast.cancel();
@@ -207,7 +208,7 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
     /**
      * Add first fragment
      *
-     * @param sFragment
+     * @param sFragment fragment to adding to the layout
      */
     public void addFragment(Fragment sFragment) {
         // Hide keyboard if it is showed
@@ -259,8 +260,7 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
     }
 
     protected Fragment getCurrentFragment() {
-        Fragment rCurrentFragment = getSupportFragmentManager().findFragmentById(R.id.main_fragment_container);
-        return rCurrentFragment;
+        return getSupportFragmentManager().findFragmentById(R.id.main_fragment_container);
     }
 
     public void setSlideMenuSelected(int position){
