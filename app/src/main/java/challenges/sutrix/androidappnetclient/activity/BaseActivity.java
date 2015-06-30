@@ -50,7 +50,7 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
         super.onCreate(savedInstanceState);
         mToast = new Toast(this);
         mNotificationVoice = new TextToSpeech(this, this);
-        titles = getResources().getStringArray(R.array.menu_array_string);
+        titles = getResources().getStringArray(R.array.menu_item_array);
     }
 
     /**
@@ -237,7 +237,7 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            showToast("Setting is click");
+           showToast("Setting is click");
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -278,7 +278,7 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
             mNotificationVoice.setLanguage(Locale.ENGLISH);
             mNotificationVoice.stop();
         }else{
-            showToast("Sorry, but text speed is not support in your device");
+            showToast(R.string.error_text_to_speech_string);
         }
     }
 
@@ -287,6 +287,8 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
         if (mNotificationVoice != null) {
             mNotificationVoice.stop();
             mNotificationVoice.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+        }else{
+            showToast(R.string.error_text_to_speech_string);
         }
     }
 }

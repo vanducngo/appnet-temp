@@ -18,5 +18,9 @@
     <string name="details_friday">Friday</string>
     <string name="details_saturday">Saturday</string>
     <string name="details_alarm_tone">Alarm Tone</string>
-    <string name="details_alarm_tone_default">Select an alarm tone</string>
+    <string name="details_alarm_tone_default">Select an alarm tone</string>g
+
+
+    <!--Text to speech-->
+    <string name = "error_text_to_speech_string">Sorry, but text speed is not support in your device</string>
 </resources>
