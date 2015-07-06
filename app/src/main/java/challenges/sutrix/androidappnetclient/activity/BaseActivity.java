@@ -45,12 +45,14 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
     private DrawerLayout Drawer;    // Declaring DrawerLayout
     private ActionBarDrawerToggle mDrawerToggle;
 
+    private boolean isDebugMode = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mToast = new Toast(this);
         mNotificationVoice = new TextToSpeech(this, this);
-        titles = getResources().getStringArray(R.array.menu_item_array);
+        titles = getResources().getStringArray(R.array.menu_array_string);
     }
 
     /**
@@ -284,11 +286,13 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
     @SuppressWarnings("deprecation")
     public void speak(String text) {
-        if (mNotificationVoice != null) {
-            mNotificationVoice.stop();
-            mNotificationVoice.speak(text, TextToSpeech.QUEUE_FLUSH, null);
-        }else{
-            showToast(R.string.error_text_to_speech_string);
+        if(!isDebugMode) {
+            if (mNotificationVoice != null) {
+                mNotificationVoice.stop();
+                mNotificationVoice.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+            } else {
+                showToast(R.string.error_text_to_speech_string);
+            }
         }
     }
 }

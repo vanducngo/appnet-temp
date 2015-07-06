@@ -1,0 +1,11 @@
+<resources>
+    <string-array name="menu_array_string">
+        <item>Tổng quan về TOEIC</item>
+        <item>Từ vựng TOEIC</item>
+        <item>Ngữ pháp TOEIC</item>
+        <item>Luyện nghe TOEIC</item>
+        <item>Luyện đọc TOEIC</item>
+        <item>Thi thử TOEIC</item>
+        <item>Cài đặt</item>
+    </string-array>
+</resources>
