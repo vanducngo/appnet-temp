@@ -37,7 +37,7 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
     //Navigation drawer
     private String titles[];
-    private int ICONS[] = {R.drawable.ic_vocabulary, R.drawable.ic_basic_grammar, R.drawable.ic_advantage_grammar, R.drawable.ic_test, R.drawable.ic_setting, R.drawable.ic_basic_grammar, R.drawable.ic_basic_grammar};
+    private int ICONS[] = {R.drawable.ic_vocabulary, R.drawable.ic_vocabulary, R.drawable.ic_grammar, R.drawable.ic_listening, R.drawable.ic_reading, R.drawable.ic_basic_grammar, R.drawable.ic_basic_grammar};
 
     private RecyclerView mRecyclerView; // Declaring RecyclerView
     private SlideMenuAdapter mAdapter;  // Declaring Adapter For Recycler View
