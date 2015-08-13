@@ -1,5 +1,6 @@
 package challenges.sutrix.androidappnetclient.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.v4.app.Fragment;
@@ -240,6 +241,9 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
         int id = item.getItemId();
         if (id == R.id.action_settings) {
            showToast("Setting is click");
+            Intent intent = new Intent(this,SampleCustomDialogActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.move_right_in,R.anim.move_left_out);
             return true;
         }
         return super.onOptionsItemSelected(item);
