@@ -26,7 +26,7 @@ import challenges.sutrix.androidappnetclient.fragment.GroupFragment;
 import challenges.sutrix.androidappnetclient.fragment.HomeFragment;
 import challenges.sutrix.androidappnetclient.fragment.MainFragment;
 import challenges.sutrix.androidappnetclient.fragment.OtherFragment;
-import challenges.sutrix.androidappnetclient.fragment.PopFragment;
+import challenges.sutrix.androidappnetclient.function.vocabulary.VocabularyFragment;
 import challenges.sutrix.androidappnetclient.fragment.RockAndRollFragment;
 import challenges.sutrix.androidappnetclient.listener.RecyclerItemClickListener;
 import challenges.sutrix.androidappnetclient.utils.KeyboardUtils;
@@ -91,8 +91,8 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
                                     }
                                     break;
                                 case 2:
-                                    if(!(tCurrentFragment instanceof PopFragment)) {
-                                        tFragment = new PopFragment();
+                                    if(!(tCurrentFragment instanceof VocabularyFragment)) {
+                                        tFragment = new VocabularyFragment();
                                         replaceFragment(tFragment, true);
                                     }
                                     break;

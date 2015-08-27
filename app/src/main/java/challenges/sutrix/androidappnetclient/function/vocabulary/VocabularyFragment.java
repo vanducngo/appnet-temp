@@ -1,4 +1,4 @@
-package challenges.sutrix.androidappnetclient.fragment;
+package challenges.sutrix.androidappnetclient.function.vocabulary;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,7 +13,7 @@ import challenges.sutrix.androidappnetclient.activity.MainActivity;
 /**
  * Created by root on 27/05/2015.
  */
-public class PopFragment extends Fragment{
+public class VocabularyFragment extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

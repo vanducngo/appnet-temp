@@ -18,7 +18,7 @@ import challenges.sutrix.androidappnetclient.utils.PreferenceUtils;
 import challenges.sutrix.androidappnetclient.fragment.CountryMusicFragment;
 import challenges.sutrix.androidappnetclient.fragment.HomeFragment;
 import challenges.sutrix.androidappnetclient.fragment.OtherFragment;
-import challenges.sutrix.androidappnetclient.fragment.PopFragment;
+import challenges.sutrix.androidappnetclient.function.vocabulary.VocabularyFragment;
 import challenges.sutrix.androidappnetclient.fragment.RockAndRollFragment;
 
 public class SlideMenuAdapter
@@ -46,7 +46,7 @@ public class SlideMenuAdapter
         int tCurrentFragmentPosition = 0;
         if(tFragment instanceof HomeFragment){
             tCurrentFragmentPosition = 1;
-        }else if(tFragment instanceof PopFragment){
+        }else if(tFragment instanceof VocabularyFragment){
             tCurrentFragmentPosition = 2;
         }else if(tFragment instanceof RockAndRollFragment){
             tCurrentFragmentPosition = 3;
