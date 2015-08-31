@@ -9,8 +9,17 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
+
+import challenges.sutrix.androidappnetclient.R;
+import challenges.sutrix.androidappnetclient.function.vocabulary.listener.PopupCloseListener;
+import challenges.sutrix.androidappnetclient.function.vocabulary.model.VocabularyModel;
 
 /**
  * Created by root on 27/08/2015.
@@ -19,6 +28,7 @@ public class VocabularyDetailsPopup {
     private final Context mContext;
     private AnimatorSet mCurrentAnimator;
     private long mShortAnimationDuration;
+    private RelativeLayout expandedImageView;
 
     public VocabularyDetailsPopup(Context sContext){
         this.mContext = sContext;
@@ -27,8 +37,12 @@ public class VocabularyDetailsPopup {
 
     /**
      * @param sView  The view to zoom in.
+     * @param tVocabularyModel
+     * @param position
+     * @param sListener
+     * @param isRemembered
      */
-    public void showVocabularyPopup(final View sView, final String title, final RelativeLayout expandedImageView, final View tClickMeBtn, final View container) {
+    public void showVocabularyPopup(final View sView, final RelativeLayout expandedImageView, final View tPopupLayout, final View container, VocabularyModel tVocabularyModel, final int position, final PopupCloseListener sListener, boolean isRemembered) {
         // If there's an animation in progress, cancel it immediately and proceed with this one.
         if (mCurrentAnimator != null) {
             return;
@@ -107,53 +121,77 @@ public class VocabularyDetailsPopup {
         set.start();
         mCurrentAnimator = set;
 
+
+
+        TextView tTvName = (TextView)tPopupLayout.findViewById(R.id.tv_vocabulary_details_name_popup);
+        TextView tTvMeaning = (TextView)tPopupLayout.findViewById(R.id.tv_vocabulary_details_meaning_popup);
+        ImageView tIvImage = (ImageView)tPopupLayout.findViewById(R.id.iv_vocabulary_details_image_popup);
+        final CheckBox tCbRemembered = (CheckBox)tPopupLayout.findViewById(R.id.cb_vocabulary_popup_remember);
+        tCbRemembered.setChecked(isRemembered);
+        
+        Button tBtnOk = (Button)tPopupLayout.findViewById(R.id.btn_vocabulary_popup_ok);
+
+        final float startScaleFinal = startScale;
+        tBtnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sListener.onPopupButtonOkClicked(tCbRemembered.isChecked(), position, sView);
+                OpenClosedPopup(expandedImageView,startBounds,startScaleFinal,sView);
+
+            }
+        });
+
+        Picasso.with(mContext).load(R.drawable.contract).into(tIvImage);
+        tTvName.setText(tVocabularyModel.getWord());
+        tTvMeaning.setText(tVocabularyModel.getMeanVietnamese());
+
+
         // Upon clicking the zoomed-in image, it should zoom back down to the original bounds
         // and show the thumbnail instead of the expanded image.
-        final float startScaleFinal = startScale;
+
         expandedImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mCurrentAnimator != null) {
-                    mCurrentAnimator.cancel();
-                }
+                OpenClosedPopup(expandedImageView, startBounds, startScaleFinal, sView);
 
-                // Animate the four positioning/sizing properties in parallel, back to their
-                // original values.
-                AnimatorSet set = new AnimatorSet();
-                set
-                        .play(ObjectAnimator.ofFloat(expandedImageView, View.X, startBounds.centerX()))
-                        .with(ObjectAnimator.ofFloat(expandedImageView, View.Y, startBounds.centerY()))
-                        .with(ObjectAnimator
-                                .ofFloat(expandedImageView, View.SCALE_X, startScaleFinal))
-                        .with(ObjectAnimator
-                                .ofFloat(expandedImageView, View.SCALE_Y, startScaleFinal));
-                set.setDuration(mShortAnimationDuration);
-                set.setInterpolator(new DecelerateInterpolator());
-                set.addListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        sView.setAlpha(1f);
-                        expandedImageView.setVisibility(View.GONE);
-                        mCurrentAnimator = null;
-                    }
-
-                    @Override
-                    public void onAnimationCancel(Animator animation) {
-                        sView.setAlpha(1f);
-                        expandedImageView.setVisibility(View.GONE);
-                        mCurrentAnimator = null;
-                    }
-                });
-                set.start();
-                mCurrentAnimator = set;
             }
         });
+    }
 
-        tClickMeBtn.setOnClickListener(new View.OnClickListener() {
+    private void OpenClosedPopup(final RelativeLayout expandedImageView, final Rect startBounds,
+                                 final float startScaleFinal, final View sView){
+        if (mCurrentAnimator != null) {
+            mCurrentAnimator.cancel();
+        }
+
+        // Animate the four positioning/sizing properties in parallel, back to their
+        // original values.
+        AnimatorSet set = new AnimatorSet();
+        set
+                .play(ObjectAnimator.ofFloat(expandedImageView, View.X, startBounds.centerX()))
+                .with(ObjectAnimator.ofFloat(expandedImageView, View.Y, startBounds.centerY()))
+                .with(ObjectAnimator
+                        .ofFloat(expandedImageView, View.SCALE_X, startScaleFinal))
+                .with(ObjectAnimator
+                        .ofFloat(expandedImageView, View.SCALE_Y, startScaleFinal));
+        set.setDuration(mShortAnimationDuration);
+        set.setInterpolator(new DecelerateInterpolator());
+        set.addListener(new AnimatorListenerAdapter() {
             @Override
-            public void onClick(View v) {
-                Toast.makeText(mContext, "Hello: " + title + "Vocabulary popup", Toast.LENGTH_SHORT).show();
+            public void onAnimationEnd(Animator animation) {
+                sView.setAlpha(1f);
+                expandedImageView.setVisibility(View.GONE);
+                mCurrentAnimator = null;
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+                sView.setAlpha(1f);
+                expandedImageView.setVisibility(View.GONE);
+                mCurrentAnimator = null;
             }
         });
+        set.start();
+        mCurrentAnimator = set;
     }
 }

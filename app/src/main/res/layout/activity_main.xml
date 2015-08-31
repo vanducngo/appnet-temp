@@ -45,12 +45,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="invisible">
-
-        <ImageView
-            android:id="@+id/main_popup_image_view"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:src="@drawable/ic_advantage_grammar"
-            android:layout_centerInParent="true" />
+            <include
+                android:id="@+id/rl_vocabulary_popup"
+                layout="@layout/vocabulary_details_popup_view"
+            />
     </RelativeLayout>
 </FrameLayout>

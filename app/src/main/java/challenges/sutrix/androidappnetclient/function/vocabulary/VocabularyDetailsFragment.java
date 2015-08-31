@@ -3,10 +3,12 @@ package challenges.sutrix.androidappnetclient.function.vocabulary;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -15,13 +17,14 @@ import java.util.ArrayList;
 import challenges.sutrix.androidappnetclient.R;
 import challenges.sutrix.androidappnetclient.activity.MainActivity;
 import challenges.sutrix.androidappnetclient.function.vocabulary.adapter.VocabularyDetailsAdapter;
+import challenges.sutrix.androidappnetclient.function.vocabulary.listener.PopupCloseListener;
 import challenges.sutrix.androidappnetclient.function.vocabulary.listener.RememberedCheckChangeListener;
 import challenges.sutrix.androidappnetclient.function.vocabulary.model.VocabularyModel;
 
 /**
  * Created by root on 27/05/2015.
  */
-public class VocabularyDetailsFragment extends Fragment implements ListView.OnItemClickListener, RememberedCheckChangeListener {
+public class VocabularyDetailsFragment extends Fragment implements PopupCloseListener ,ListView.OnItemClickListener, RememberedCheckChangeListener {
 
     private ListView mListView;
     private ArrayList<VocabularyModel> mVocabularyList;
@@ -75,15 +78,30 @@ public class VocabularyDetailsFragment extends Fragment implements ListView.OnIt
     }
 
     @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-        ((MainActivity) getActivity()).zoomPopUpView(view, mVocabularyList.get(position).getWord());
+    public void onItemClick(AdapterView<?> adapterView, View sView, int position, long id) {
+        boolean isRemembered = false;
+        if (sView != null) {
+            CheckBox checkBox = (CheckBox)sView.findViewById(R.id.cb_vocabulary_details_remembered_item_item);
+            isRemembered = checkBox.isChecked();
+        }
+        ((MainActivity) getActivity()).zoomPopUpView(sView, mVocabularyList.get(position), position, this, isRemembered);
     }
 
     @Override
     public void onRememberedCheckChangeListener(boolean isChecked, int position) {
         //TODO update in sqlite
+        Log.i("Is checked", "Checked = " + isChecked);
         mVocabularyList.get(position).setRemember(isChecked);
-        mAdapter.notifyDataSetChanged();
 
+    }
+
+    @Override
+    public void onPopupButtonOkClicked(boolean isChecked, int position, View sView) {
+        if (sView != null) {
+            CheckBox checkBox = (CheckBox)sView.findViewById(R.id.cb_vocabulary_details_remembered_item_item);
+//            mVocabularyList.get(position).setRemember(isChecked);
+            Log.i("ischeck", "CHeck = " + isChecked);
+            checkBox.setChecked(isChecked);
+        }
     }
 }

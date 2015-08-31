@@ -1,6 +1,7 @@
 package challenges.sutrix.androidappnetclient.function.vocabulary.adapter;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,17 +76,21 @@ public class VocabularyDetailsAdapter extends BaseAdapter {
         tViewHolder.mTvMeaning.setText(mVocabularyList.get(position).getMeanVietnamese());
         Picasso.with(mContext).load(R.drawable.contract).into(tViewHolder.mIvImage);
 
-        if (mVocabularyList.get(position).isRemember()) {
-            tViewHolder.mCbRemember.setChecked(true);
-        } else {
-            tViewHolder.mCbRemember.setChecked(false);
-        }
+
         tViewHolder.mCbRemember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 mListener.onRememberedCheckChangeListener(isChecked, position);
             }
         });
+
+        if (mVocabularyList.get(position).isRemember()) {
+            tViewHolder.mCbRemember.setChecked(true);
+            Log.i("Is remember", "true");
+        } else {
+            tViewHolder.mCbRemember.setChecked(false);
+            Log.i("Is remember", "false");
+        }
 
         return sView;
     }
