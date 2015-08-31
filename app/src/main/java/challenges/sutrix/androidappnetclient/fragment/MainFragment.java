@@ -27,6 +27,7 @@ import java.util.Arrays;
 
 import challenges.sutrix.androidappnetclient.activity.MainActivity;
 import challenges.sutrix.androidappnetclient.R;
+import challenges.sutrix.androidappnetclient.function.overview.OverviewFragment;
 import challenges.sutrix.androidappnetclient.utils.ConnectionUtils;
 import challenges.sutrix.androidappnetclient.utils.Constants;
 import challenges.sutrix.androidappnetclient.utils.PreferenceUtils;
@@ -94,7 +95,7 @@ public class MainFragment extends Fragment implements FacebookCallback<LoginResu
                 PreferenceUtils.saveString(getActivity(), PreferenceUtils.PREF_LOGIN_EMAIL, bEmail);
                 PreferenceUtils.saveString(getActivity(), PreferenceUtils.PREF_USER_IMAGE, String.format(PreferenceUtils.PREF_USER_IMAGE_URL, bID));
                 //Goto Activity main
-                ((MainActivity) getActivity()).replaceFragment(new HomeFragment(), true);
+                ((MainActivity) getActivity()).replaceFragment(new OverviewFragment(), true);
 
             } else {
                 Toast.makeText(getActivity(), getString(R.string.error_facebook_login_string), Toast.LENGTH_SHORT).show();

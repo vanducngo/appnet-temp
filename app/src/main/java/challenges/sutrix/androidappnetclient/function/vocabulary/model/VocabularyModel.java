@@ -1,4 +1,4 @@
-package challenges.sutrix.androidappnetclient.model;
+package challenges.sutrix.androidappnetclient.function.vocabulary.model;
 
 /**
  * Created by root on 16/07/2015.
@@ -12,12 +12,13 @@ public class VocabularyModel {
     private String type;
     private String example;
     private byte[] image;
+    private boolean isRemember;
 
     public long getId() {
         return id;
     }
 
-    public void setId(long id){
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -75,5 +76,13 @@ public class VocabularyModel {
 
     public void setImage(byte[] image) {
         this.image = image;
+    }
+
+    public boolean isRemember() {
+        return isRemember;
+    }
+
+    public void setRemember(boolean isRemember) {
+        this.isRemember = isRemember;
     }
 }

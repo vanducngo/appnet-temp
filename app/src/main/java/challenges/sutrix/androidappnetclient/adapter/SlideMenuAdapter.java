@@ -15,11 +15,11 @@ import com.squareup.picasso.Picasso;
 
 import challenges.sutrix.androidappnetclient.R;
 import challenges.sutrix.androidappnetclient.utils.PreferenceUtils;
-import challenges.sutrix.androidappnetclient.fragment.CountryMusicFragment;
-import challenges.sutrix.androidappnetclient.fragment.HomeFragment;
-import challenges.sutrix.androidappnetclient.fragment.OtherFragment;
-import challenges.sutrix.androidappnetclient.function.vocabulary.VocabularyFragment;
-import challenges.sutrix.androidappnetclient.fragment.RockAndRollFragment;
+import challenges.sutrix.androidappnetclient.function.listening.ListeningFragment;
+import challenges.sutrix.androidappnetclient.function.overview.OverviewFragment;
+import challenges.sutrix.androidappnetclient.function.reading.ReadingFragment;
+import challenges.sutrix.androidappnetclient.function.vocabulary.VocabularyCategoryFragment;
+import challenges.sutrix.androidappnetclient.function.grammar.GrammarFragment;
 
 public class SlideMenuAdapter
         extends RecyclerView.Adapter<SlideMenuAdapter.ViewHolder> {
@@ -44,15 +44,15 @@ public class SlideMenuAdapter
 
     public void setSelectedOnBackPress(Fragment tFragment) {
         int tCurrentFragmentPosition = 0;
-        if(tFragment instanceof HomeFragment){
+        if(tFragment instanceof OverviewFragment){
             tCurrentFragmentPosition = 1;
-        }else if(tFragment instanceof VocabularyFragment){
+        }else if(tFragment instanceof VocabularyCategoryFragment){
             tCurrentFragmentPosition = 2;
-        }else if(tFragment instanceof RockAndRollFragment){
+        }else if(tFragment instanceof GrammarFragment){
             tCurrentFragmentPosition = 3;
-        }else if(tFragment instanceof CountryMusicFragment){
+        }else if(tFragment instanceof ListeningFragment){
             tCurrentFragmentPosition = 4;
-        }else if(tFragment instanceof OtherFragment){
+        }else if(tFragment instanceof ReadingFragment){
             tCurrentFragmentPosition = 5;
         }
 

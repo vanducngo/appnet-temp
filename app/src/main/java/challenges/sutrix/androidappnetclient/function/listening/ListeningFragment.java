@@ -1,4 +1,4 @@
-package challenges.sutrix.androidappnetclient.fragment;
+package challenges.sutrix.androidappnetclient.function.listening;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,14 +8,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import challenges.sutrix.androidappnetclient.R;
-import challenges.sutrix.androidappnetclient.activity.MainActivity;
 
-public class RockAndRollFragment extends Fragment{
+/**
+ * Created by root on 27/05/2015.
+ */
+public class ListeningFragment extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_rock_and_roll,
+        View view = inflater.inflate(R.layout.fragment_listening,
                 container, false);
         initView(view);
         return view;
@@ -26,7 +28,7 @@ public class RockAndRollFragment extends Fragment{
 
     @Override
     public void onResume() {
-        ((MainActivity)getActivity()).speak("We're in Rock and Roll fragment");
+//        ((MainActivity)getActivity()).speak("We're in country music fragment");
         super.onResume();
     }
 }

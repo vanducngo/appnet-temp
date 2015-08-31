@@ -22,5 +22,84 @@
 
 
     <!--Text to speech-->
-    <string name = "error_text_to_speech_string">Sorry, but text speed is not support in your device</string>
+    <string name="error_text_to_speech_string">Sorry, but text speed is not support in your device</string>
+
+    <!-- fucntion -->
+    <string name="listening_photos_string">Photos</string>
+    <string name="listening_question_response_string">Question - Response</string>
+    <string name="listening_short_conversation_string">Short Conversations</string>
+    <string name="listening_short_talk">Short Talks</string>
+    <string name="reading_incomplete_sentences_string">Incomplete Sentences</string>
+    <string name="reading_text_completion_string">Text Completion</string>
+    <string name="reading_text_comprehension_string">Comprehension</string>
+
+    <!-- Overview-->
+    <string name="overview_toeic_stand">TOEIC - Test Of English for International Communication</string>
+    <string name="overview_toeic_introduction">TOEIC là chứng chỉ tiếng Anh quốc tế về giao tiếp dành cho người đi làm không phải là dân sử dụng tiếng Anh làm tiếng mẹ đẻ.</string>
+    <string name="overview_toeic_structure">Bài thi TOEIC là một bài thi trắc nghiệm làm trên giấy (paper and pencil, multiple-choice test) gồm có hai thành phần (tổng thời gian làm bài là 120 phút, tổng số câu hỏi là 200 câu) cụ thể như sau:</string>
+    <string name="overview_listening">Listening Comprehension (100 câu hỏi, 45 phút làm bài)</string>
+    <string name="overview_listening_photographs">Part 1: Photographs – 10 câu hỏi.</string>
+    <string name="overview_listening_question_response">Part 2: Question and Response – 30 câu hỏi.</string>
+    <string name="overview_listening_short_conversation">Part 3: Short Conversation – 30 câu hỏi hội thoại.</string>
+    <string name="overview_listening_short_talk">Part 4: Short Talks – 30 câu hỏi về bài nói.</string>
+    <string name="overview_reading">Phần II: Reading (100 câu hỏi, 75 phút làm bài)</string>
+    <string name="overview_reading_incomplete_sentences">Part 5: Incomplete Sentences – 40 câu hỏi hoàn thành câu.</string>
+    <string name="overview_reading_text_completion">Part 6: Text completion – 12 câu hỏi.</string>
+    <string name="overview_reading_conprehension">Part 7: Comprehension – 48 câu hỏi.</string>
+
+    <!-- Vocabulary -->
+    <string name="is_remembered_string">Đã nhớ</string>
+
+    <string-array name="vocabulary_type">
+        <item>Contract</item>
+        <item>Marketing</item>
+        <item>Warranties</item>
+        <item>Business Planning</item>
+        <item>Conferences</item>
+        <item>Computers and the Internet</item>
+        <item>Office Technology</item>
+        <item>Office Procedures</item>
+        <item>Electronics</item>
+        <item>Correspondence</item>
+        <item>Job Ads and Recruitment</item>
+        <item>Apply and Interviewing</item>
+        <item>Hiring and Training</item>
+        <item>Salaries and Benefits</item>
+        <item>Promotions - Pensions - Awards</item>
+        <item>Shopping</item>
+        <item>Ordering Supplies</item>
+        <item>Shipping</item>
+        <item>Invoices</item>
+        <item>Inventory</item>
+        <item>Banking</item>
+        <item>Accounting</item>
+        <item>Investments</item>
+        <item>Taxes</item>
+        <item>Financial Statements</item>
+        <item>Property and Departments</item>
+        <item>Board Meeting</item>
+        <item>Quality Control</item>
+        <item>Product Development</item>
+        <item>Renting and Leasing</item>
+        <item>Selecting a Restaurant</item>
+        <item>Eating Out</item>
+        <item>Ordering Lunch</item>
+        <item>Cooking As A Career</item>
+        <item>Events</item>
+        <item>General Travel</item>
+        <item>Airlines</item>
+        <item>Trains</item>
+        <item>Hotels</item>
+        <item>Car Rentals</item>
+        <item>Movies</item>
+        <item>Theater</item>
+        <item>Music</item>
+        <item>Museums</item>
+        <item>Media</item>
+        <item>Doctor\'s Office</item>
+        <item>Dentist\'s Office</item>
+        <item>Health</item>
+        <item>Hospitals</item>
+        <item>Pharmacy</item>
+    </string-array>
 </resources>

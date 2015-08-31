@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_grey"
+    android:orientation="vertical">
+
+    <RelativeLayout style="@style/common_item_layout">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_reading_incomplete_sentence"
+            style="@style/common_item_image_view"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/tv_reading_photo"
+            style="@style/common_item"
+            android:layout_toRightOf="@+id/iv_reading_incomplete_sentence"
+            android:text="@string/reading_incomplete_sentences_string" />
+    </RelativeLayout>
+
+    <RelativeLayout style="@style/common_item_layout">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_reading_text_completion"
+            style="@style/common_item_image_view"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            style="@style/common_item"
+            android:layout_toRightOf="@+id/iv_reading_text_completion"
+            android:text="@string/reading_text_completion_string" />
+    </RelativeLayout>
+
+    <RelativeLayout style="@style/common_item_layout">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_reading_text_comprehension"
+            style="@style/common_item_image_view"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            style="@style/common_item"
+            android:layout_toRightOf="@+id/iv_reading_text_comprehension"
+            android:text="@string/reading_text_comprehension_string" />
+    </RelativeLayout>
+
+
+</LinearLayout>

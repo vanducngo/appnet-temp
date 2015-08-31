@@ -71,4 +71,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             this.mIvAvatar = (ImageView)view.findViewById(R.id.adapter_avatar);
         }
     }
+
+
 }

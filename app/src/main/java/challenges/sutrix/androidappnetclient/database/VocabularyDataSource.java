@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 
-import challenges.sutrix.androidappnetclient.model.VocabularyModel;
+import challenges.sutrix.androidappnetclient.function.vocabulary.model.VocabularyModel;
 
 /**
  * Created by root on 16/07/2015.
@@ -25,6 +25,7 @@ public class VocabularyDataSource {
     private static final String COLUMN_MEANING_VI = "mean_vi";
     private static final String COLUMN_MEANING_EN = "mean_en";
     private static final String COLUMN_EXAMPLE = "example";
+    private static final String COLUMN_REMEMBER = "remember";
     private static final String COLUMN_IMAGE = "image";
 
     public static final String DATABASE_CREATE = "create table "
@@ -36,13 +37,14 @@ public class VocabularyDataSource {
             + COLUMN_MEANING_VI + " text,"
             + COLUMN_MEANING_EN + " text,"
             + COLUMN_EXAMPLE + " text,"
+            + COLUMN_REMEMBER + " integer not null,"
             + COLUMN_IMAGE + " BLOB,";
 
     private DataBaseHelper dbHelper;
-    private String[] allColumns = { COLUMN_ID, COLUMN_WORD,
+    private String[] allColumns = {COLUMN_ID, COLUMN_WORD,
             COLUMN_TYPE, COLUMN_CATEGORY,
             COLUMN_MEANING_VI, COLUMN_MEANING_EN,
-            COLUMN_EXAMPLE, COLUMN_IMAGE};
+            COLUMN_EXAMPLE, COLUMN_REMEMBER, COLUMN_IMAGE};
 
     public VocabularyDataSource(Context context) {
         dbHelper = new DataBaseHelper(context);
@@ -57,8 +59,8 @@ public class VocabularyDataSource {
     }
 
     public long insertVocabulary(String sWord, String sType,
-                              String sCategory, String sMeanVi, String sMeanEn,
-                              String sExample, byte[] sImage) {
+                                 String sCategory, String sMeanVi, String sMeanEn,
+                                 String sExample, boolean isRemembered, byte[] sImage) {
         ContentValues values = new ContentValues();
 
         values.put(COLUMN_WORD, sWord);
@@ -67,7 +69,8 @@ public class VocabularyDataSource {
         values.put(COLUMN_MEANING_VI, sMeanVi);
         values.put(COLUMN_MEANING_EN, sMeanEn);
         values.put(COLUMN_EXAMPLE, sExample);
-        values.put( COLUMN_IMAGE, sImage);
+        values.put(COLUMN_REMEMBER, isRemembered);
+        values.put(COLUMN_IMAGE, sImage);
         long insertId = database.insert(TABLE_VOCABULARY,
                 null, values);
 
@@ -79,6 +82,19 @@ public class VocabularyDataSource {
         System.out.println("Bai hat da duoc xoa voi id: " + id);
         database.delete(TABLE_VOCABULARY,
                 COLUMN_ID + " = " + id, null);
+    }
+
+    public void updateVocabulary(int sID, boolean isRemember) {
+
+        ContentValues cv = new ContentValues();
+        if (isRemember) {
+            cv.put(COLUMN_REMEMBER, 1);
+        } else {
+            cv.put(COLUMN_REMEMBER, 0);
+        }
+
+        database.update(TABLE_VOCABULARY, cv,
+                COLUMN_ID + " = " + sID, null);
     }
 
     public ArrayList<VocabularyModel> getAllVocabulary() {
@@ -107,7 +123,14 @@ public class VocabularyDataSource {
         rVocabulary.setMeanVietnamese(cursor.getString(4));
         rVocabulary.setMeanEnglish(cursor.getString(5));
         rVocabulary.setExample(cursor.getString(6));
-        rVocabulary.setImage(cursor.getBlob(7));
+
+        int isRemember = cursor.getInt(7);
+        if (isRemember == 1) {
+            rVocabulary.setRemember(true);
+        } else {
+            rVocabulary.setRemember(false);
+        }
+        rVocabulary.setImage(cursor.getBlob(8));
         return rVocabulary;
     }
 

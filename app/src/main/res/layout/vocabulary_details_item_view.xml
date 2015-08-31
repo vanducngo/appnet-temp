@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/vocabulary_item_layout">
+
+    <ImageView
+        android:id="@+id/iv_vocabulary_details_image_item"
+        style="@style/vocabulary_item_image"
+        android:layout_alignParentLeft="true"
+        android:src="@drawable/contract" />
+
+    <LinearLayout
+        android:id="@+id/ll_vocabulary_details_item_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@+id/iv_vocabulary_details_image_item"
+        android:layout_toLeftOf="@+id/cb_vocabulary_details_remembered_item_item"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_vocabulary_details_name_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text=""
+            android:textColor="@color/blue_btn_bg_color"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_vocabulary_details_meaning_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text=""
+            android:textColor="@color/blue_btn_bg_color"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+
+    <CheckBox
+        android:id="@+id/cb_vocabulary_details_remembered_item_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:checked="false"
+        android:text="@string/is_remembered_string" />
+</RelativeLayout>

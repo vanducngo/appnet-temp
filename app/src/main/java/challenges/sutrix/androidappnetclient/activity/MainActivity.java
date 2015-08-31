@@ -16,8 +16,8 @@ import com.facebook.login.LoginManager;
 import org.json.JSONObject;
 
 import challenges.sutrix.androidappnetclient.R;
-import challenges.sutrix.androidappnetclient.fragment.HomeFragment;
-import challenges.sutrix.androidappnetclient.function.vocabulary.VocabularyPopup;
+import challenges.sutrix.androidappnetclient.function.overview.OverviewFragment;
+import challenges.sutrix.androidappnetclient.function.vocabulary.VocabularyDetailsPopup;
 import challenges.sutrix.androidappnetclient.utils.PreferenceUtils;
 
 
@@ -71,7 +71,7 @@ public class MainActivity extends BaseActivity implements GraphRequest.GraphJSON
 //        mProfileTracker.startTracking();
 
 //        if (isLoggedIn()) {
-            super.addFragment(new HomeFragment());
+            super.addFragment(new OverviewFragment());
 //        } else {
 //            super.addFragment(new MainFragment());
 //        }
@@ -140,7 +140,7 @@ public class MainActivity extends BaseActivity implements GraphRequest.GraphJSON
         View container = findViewById(R.id.container);
         RelativeLayout expandedImageView = (RelativeLayout) findViewById(R.id.expanded_layout);
         ImageView tClickMeBtn = (ImageView)findViewById(R.id.main_popup_image_view);
-        VocabularyPopup popup = new VocabularyPopup(this);
+        VocabularyDetailsPopup popup = new VocabularyDetailsPopup(this);
         popup.showVocabularyPopup(sView, title, expandedImageView, tClickMeBtn, container);
     }
 }

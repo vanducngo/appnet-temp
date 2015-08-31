@@ -21,13 +21,13 @@ import java.util.Locale;
 
 import challenges.sutrix.androidappnetclient.R;
 import challenges.sutrix.androidappnetclient.adapter.SlideMenuAdapter;
-import challenges.sutrix.androidappnetclient.fragment.CountryMusicFragment;
-import challenges.sutrix.androidappnetclient.fragment.GroupFragment;
-import challenges.sutrix.androidappnetclient.fragment.HomeFragment;
+import challenges.sutrix.androidappnetclient.function.listening.ListeningFragment;
+import challenges.sutrix.androidappnetclient.function.examination.ExaminationFragment;
+import challenges.sutrix.androidappnetclient.function.overview.OverviewFragment;
 import challenges.sutrix.androidappnetclient.fragment.MainFragment;
-import challenges.sutrix.androidappnetclient.fragment.OtherFragment;
-import challenges.sutrix.androidappnetclient.function.vocabulary.VocabularyFragment;
-import challenges.sutrix.androidappnetclient.fragment.RockAndRollFragment;
+import challenges.sutrix.androidappnetclient.function.reading.ReadingFragment;
+import challenges.sutrix.androidappnetclient.function.vocabulary.VocabularyCategoryFragment;
+import challenges.sutrix.androidappnetclient.function.grammar.GrammarFragment;
 import challenges.sutrix.androidappnetclient.listener.RecyclerItemClickListener;
 import challenges.sutrix.androidappnetclient.utils.KeyboardUtils;
 
@@ -85,38 +85,38 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
                             Fragment tFragment = null;
                             switch (position) {
                                 case 1:
-                                    if(!(tCurrentFragment instanceof HomeFragment)) {
-                                        tFragment = new HomeFragment();
+                                    if(!(tCurrentFragment instanceof OverviewFragment)) {
+                                        tFragment = new OverviewFragment();
                                         replaceFragment(tFragment, true);
                                     }
                                     break;
                                 case 2:
-                                    if(!(tCurrentFragment instanceof VocabularyFragment)) {
-                                        tFragment = new VocabularyFragment();
+                                    if(!(tCurrentFragment instanceof VocabularyCategoryFragment)) {
+                                        tFragment = new VocabularyCategoryFragment();
                                         replaceFragment(tFragment, true);
                                     }
                                     break;
                                 case 3:
-                                    if(!(tCurrentFragment instanceof RockAndRollFragment)) {
-                                        tFragment = new RockAndRollFragment();
+                                    if(!(tCurrentFragment instanceof GrammarFragment)) {
+                                        tFragment = new GrammarFragment();
                                         replaceFragment(tFragment, true);
                                     }
                                     break;
                                 case 4:
-                                    if(!(tCurrentFragment instanceof CountryMusicFragment)) {
-                                        tFragment = new CountryMusicFragment();
+                                    if(!(tCurrentFragment instanceof ListeningFragment)) {
+                                        tFragment = new ListeningFragment();
                                         replaceFragment(tFragment, true);
                                     }
                                     break;
                                 case 5:
-                                    if(!(tCurrentFragment instanceof OtherFragment)) {
-                                        tFragment = new OtherFragment();
+                                    if(!(tCurrentFragment instanceof ReadingFragment)) {
+                                        tFragment = new ReadingFragment();
                                         replaceFragment(tFragment, true);
                                     }
                                     break;
                                 case 6:
-                                    if(!(tCurrentFragment instanceof GroupFragment)) {
-                                        tFragment = new GroupFragment();
+                                    if(!(tCurrentFragment instanceof ExaminationFragment)) {
+                                        tFragment = new ExaminationFragment();
                                         replaceFragment(tFragment, true);
                                     }
                                     break;

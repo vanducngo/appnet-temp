@@ -15,12 +15,12 @@ import android.widget.Toast;
 /**
  * Created by root on 27/08/2015.
  */
-public class VocabularyPopup {
+public class VocabularyDetailsPopup {
     private final Context mContext;
     private AnimatorSet mCurrentAnimator;
     private long mShortAnimationDuration;
 
-    public VocabularyPopup(Context sContext){
+    public VocabularyDetailsPopup(Context sContext){
         this.mContext = sContext;
         mShortAnimationDuration = sContext.getResources().getInteger(android.R.integer.config_shortAnimTime);
     }

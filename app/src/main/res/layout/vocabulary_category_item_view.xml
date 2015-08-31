@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/vocabulary_item_layout">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_vocabulary_category_image_item"
+        style="@style/vocabulary_item_image"
+        android:layout_alignParentLeft="true"
+        android:src="@drawable/contract" />
+
+    <TextView
+        android:id="@+id/tv_vocabulary_category_name_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/iv_vocabulary_category_image_item"
+        android:text=""
+        android:textColor="@color/blue_btn_bg_color"
+        android:textSize="21sp" />
+
+    <TextView
+        android:id="@+id/tv_vocabulary_category_meaning_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/tv_vocabulary_category_name_item"
+        android:text=""
+        android:textColor="@color/blue_btn_bg_color"
+        android:textSize="21sp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_next" />
+</RelativeLayout>

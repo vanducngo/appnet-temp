@@ -1,4 +1,4 @@
-package challenges.sutrix.androidappnetclient.fragment;
+package challenges.sutrix.androidappnetclient.function.grammar;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,15 +10,12 @@ import android.view.ViewGroup;
 import challenges.sutrix.androidappnetclient.R;
 import challenges.sutrix.androidappnetclient.activity.MainActivity;
 
-/**
- * Created by root on 27/05/2015.
- */
-public class OtherFragment extends Fragment{
+public class GrammarFragment extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_other,
+        View view = inflater.inflate(R.layout.fragment_rock_and_roll,
                 container, false);
         initView(view);
         return view;
@@ -29,7 +26,7 @@ public class OtherFragment extends Fragment{
 
     @Override
     public void onResume() {
-        ((MainActivity)getActivity()).speak("We're in other fragment");
+        ((MainActivity)getActivity()).speak("We're in Rock and Roll fragment");
         super.onResume();
     }
 }

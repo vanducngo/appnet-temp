@@ -1,4 +1,4 @@
-package challenges.sutrix.androidappnetclient.fragment;
+package challenges.sutrix.androidappnetclient.function.examination;
 
 import android.annotation.SuppressLint;
 import android.content.pm.ActivityInfo;
@@ -16,7 +16,7 @@ import challenges.sutrix.androidappnetclient.R;
 import challenges.sutrix.androidappnetclient.activity.MainActivity;
 
 @SuppressLint("SetJavaScriptEnabled")
-public class GroupFragment extends Fragment {
+public class ExaminationFragment extends Fragment {
 
     private WebView mWebView;
     private String mUrl = "https://m.facebook.com/englishforTOEIC";
@@ -76,7 +76,7 @@ public class GroupFragment extends Fragment {
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             if (isAdded()) {
 
-                Log.i(GroupFragment.class.getSimpleName(), "shouldOverrideUrlLoading: " + url);
+                Log.i(ExaminationFragment.class.getSimpleName(), "shouldOverrideUrlLoading: " + url);
                 mWebView.loadUrl(url);
             }
             return super.shouldOverrideUrlLoading(view, url);
