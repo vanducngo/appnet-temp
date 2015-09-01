@@ -46,6 +46,7 @@
     <string name="overview_reading_incomplete_sentences">Part 5: Incomplete Sentences – 40 câu hỏi hoàn thành câu.</string>
     <string name="overview_reading_text_completion">Part 6: Text completion – 12 câu hỏi.</string>
     <string name="overview_reading_conprehension">Part 7: Comprehension – 48 câu hỏi.</string>
+    <string name="vocabulary_popup_close_string">Đóng</string>
 
     <!-- Vocabulary -->
     <string name="is_remembered_string">Đã nhớ</string>

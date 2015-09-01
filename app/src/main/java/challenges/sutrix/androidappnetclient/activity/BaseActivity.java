@@ -28,6 +28,7 @@ import challenges.sutrix.androidappnetclient.fragment.MainFragment;
 import challenges.sutrix.androidappnetclient.function.reading.ReadingFragment;
 import challenges.sutrix.androidappnetclient.function.vocabulary.VocabularyCategoryFragment;
 import challenges.sutrix.androidappnetclient.function.grammar.GrammarFragment;
+import challenges.sutrix.androidappnetclient.function.vocabulary.VocabularyDetailsFragment;
 import challenges.sutrix.androidappnetclient.listener.RecyclerItemClickListener;
 import challenges.sutrix.androidappnetclient.utils.KeyboardUtils;
 
@@ -243,7 +244,7 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
            showToast("Setting is click");
             Intent intent = new Intent(this,SampleCustomDialogActivity.class);
             startActivity(intent);
-            overridePendingTransition(R.anim.move_right_in,R.anim.move_left_out);
+            overridePendingTransition(R.anim.move_right_in, R.anim.move_left_out);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -255,13 +256,29 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
             //Finish activity if the number of fragments in the back-stack is 0
             finish();
         } else {
-            KeyboardUtils.hideKeyboard(this);
-            FragmentManager fm = this.getSupportFragmentManager();
-            fm.popBackStackImmediate();
-
             //Get current fragment
+            boolean isPopFragmentOutOfBackStack = false;
             Fragment tFragment = getCurrentFragment();
-            mAdapter.setSelectedOnBackPress(tFragment);
+            if(tFragment instanceof VocabularyDetailsFragment){
+                boolean isPopupShown = ((VocabularyDetailsFragment)tFragment).getPopupStatus();
+                if(isPopupShown){
+                    isPopFragmentOutOfBackStack = false;
+                    ((VocabularyDetailsFragment)tFragment).hidePopup();
+                }else{
+                    isPopFragmentOutOfBackStack = true;
+                }
+            }else {
+                isPopFragmentOutOfBackStack = true;
+            }
+
+            if(isPopFragmentOutOfBackStack){
+                KeyboardUtils.hideKeyboard(this);
+                FragmentManager fm = this.getSupportFragmentManager();
+                fm.popBackStackImmediate();
+
+                //set selected menu item
+                mAdapter.setSelectedOnBackPress(tFragment);
+            }
         }
     }
 

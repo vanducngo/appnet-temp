@@ -1,64 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    android:layout_margin="40dp"
-    android:padding="3dp"
-    android:clickable="true"
-    android:background="@drawable/bg_white_border_grey_large_radius"
     android:id="@+id/rl_vocabulary_details_item_layout"
-    android:descendantFocusability="blocksDescendants">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="20dp"
+    android:background="@drawable/bg_white_border_grey_large_radius"
+    android:clickable="true"
+    android:descendantFocusability="blocksDescendants"
+    android:padding="3dp">
 
-    <ImageView
-        android:id="@+id/iv_vocabulary_details_image_popup"
-        android:layout_width="@dimen/vocabulary_popup_image_size"
-        android:layout_height="@dimen/vocabulary_popup_image_size"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/contract" />
+    <ScrollView
+        android:id="@+id/sv_vocabulary_popup"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/ll_vocabulary_details_popup_footer">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/iv_vocabulary_details_image_popup"
+                android:layout_width="@dimen/vocabulary_popup_image_size"
+                android:layout_height="@dimen/vocabulary_popup_image_size"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/contract" />
 
 
-    <LinearLayout
-        android:id="@+id/ll_vocabulary_details_popup_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/iv_vocabulary_details_image_popup"
-        android:layout_above="@+id/ll_vocabulary_details_popup_footer"
-        android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/ll_vocabulary_details_popup_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_vocabulary_details_image_popup"
+                android:layout_centerHorizontal="true"
+                android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_vocabulary_details_name_popup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="fsdfsd"
-            android:textColor="@color/blue_btn_bg_color"
-            android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/tv_vocabulary_details_name_popup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="vocabulary"
+                    android:textColor="@color/blue"
+                    android:textSize="28sp" />
 
-        <TextView
-            android:id="@+id/tv_vocabulary_details_meaning_popup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="fsdfdsf"
-            android:textColor="@color/blue_btn_bg_color"
-            android:textSize="15sp" />
-        <CheckBox
-            android:id="@+id/cb_vocabulary_popup_remember"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:checked="false"
-            android:layout_marginRight="5dp"
-            android:text="@string/is_remembered_string" />
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_vocabulary_details_spelling_popup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:text="['kphienam]"
+                    android:textColor="@color/tight_grey"
+                    android:textSize="21sp" />
+
+                <TextView
+                    android:id="@+id/tv_vocabulary_details_meaning_popup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:text="['kphienam]"
+                    android:textColor="@color/orange"
+                    android:textSize="24sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.25"
+                        android:layout_margin="10dp"
+                        android:src="@drawable/ic_previous_word" />
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.25"
+                        android:layout_margin="10dp"
+                        android:src="@drawable/ic_speak_word" />
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.25"
+                        android:layout_margin="10dp"
+                        android:src="@drawable/ic_record_word" />
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.25"
+                        android:layout_margin="10dp"
+                        android:src="@drawable/ic_next_word" />
+                </LinearLayout>
+
+                <CheckBox
+                    android:id="@+id/cb_vocabulary_popup_remember"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:checked="false"
+                    android:text="@string/is_remembered_string" />
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+
     <RelativeLayout
         android:id="@+id/ll_vocabulary_details_popup_footer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
         android:orientation="vertical">
 
         <Button
@@ -66,8 +127,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:clickable="true"
-            android:text="OK"
-            android:textSize="15sp" />
+            android:background="@drawable/selector_btn_blue"
+            android:text="@string/vocabulary_popup_close_string"
+            android:textColor="@drawable/selector_btn_text_color_blue"
+            android:textSize="12sp" />
     </RelativeLayout>
 </RelativeLayout>

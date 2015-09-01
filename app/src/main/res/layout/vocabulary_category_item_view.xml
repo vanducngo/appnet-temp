@@ -15,7 +15,7 @@
         android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/iv_vocabulary_category_image_item"
         android:text=""
-        android:textColor="@color/blue_btn_bg_color"
+        android:textColor="@color/black"
         android:textSize="21sp" />
 
     <TextView
@@ -25,7 +25,7 @@
         android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/tv_vocabulary_category_name_item"
         android:text=""
-        android:textColor="@color/blue_btn_bg_color"
+        android:textColor="@color/black"
         android:textSize="21sp" />
 
     <ImageView

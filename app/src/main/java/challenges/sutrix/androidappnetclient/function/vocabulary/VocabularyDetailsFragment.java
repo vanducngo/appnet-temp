@@ -10,12 +10,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import challenges.sutrix.androidappnetclient.R;
-import challenges.sutrix.androidappnetclient.activity.MainActivity;
 import challenges.sutrix.androidappnetclient.function.vocabulary.adapter.VocabularyDetailsAdapter;
 import challenges.sutrix.androidappnetclient.function.vocabulary.listener.PopupCloseListener;
 import challenges.sutrix.androidappnetclient.function.vocabulary.listener.RememberedCheckChangeListener;
@@ -24,13 +24,19 @@ import challenges.sutrix.androidappnetclient.function.vocabulary.model.Vocabular
 /**
  * Created by root on 27/05/2015.
  */
-public class VocabularyDetailsFragment extends Fragment implements PopupCloseListener ,ListView.OnItemClickListener, RememberedCheckChangeListener {
+public class VocabularyDetailsFragment extends Fragment implements PopupCloseListener, ListView.OnItemClickListener, RememberedCheckChangeListener {
 
     private ListView mListView;
     private ArrayList<VocabularyModel> mVocabularyList;
     public static String ID = "id";
     private long mCategoryId = -1;
-    VocabularyDetailsAdapter mAdapter;
+    private VocabularyDetailsAdapter mAdapter;
+    private View mPopupContainer;
+    private RelativeLayout mExpandedImageView;
+    private RelativeLayout mPopupLayout;
+    private boolean isPopupShown = false;
+    private VocabularyDetailsPopupHandler mVocabularyPopUpHandler;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -68,6 +74,10 @@ public class VocabularyDetailsFragment extends Fragment implements PopupCloseLis
         mAdapter = new VocabularyDetailsAdapter(getActivity(), mVocabularyList, this);
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(this);
+
+        mPopupContainer = view.findViewById(R.id.container);
+        mExpandedImageView = (RelativeLayout) view.findViewById(R.id.expanded_layout);
+        mPopupLayout = (RelativeLayout) view.findViewById(R.id.rl_vocabulary_popup);
     }
 
     @Override
@@ -81,10 +91,10 @@ public class VocabularyDetailsFragment extends Fragment implements PopupCloseLis
     public void onItemClick(AdapterView<?> adapterView, View sView, int position, long id) {
         boolean isRemembered = false;
         if (sView != null) {
-            CheckBox checkBox = (CheckBox)sView.findViewById(R.id.cb_vocabulary_details_remembered_item_item);
+            CheckBox checkBox = (CheckBox) sView.findViewById(R.id.cb_vocabulary_details_remembered_item_item);
             isRemembered = checkBox.isChecked();
         }
-        ((MainActivity) getActivity()).zoomPopUpView(sView, mVocabularyList.get(position), position, this, isRemembered);
+        zoomPopUpView(sView, mVocabularyList.get(position), position, this, isRemembered);
     }
 
     @Override
@@ -97,11 +107,33 @@ public class VocabularyDetailsFragment extends Fragment implements PopupCloseLis
 
     @Override
     public void onPopupButtonOkClicked(boolean isChecked, int position, View sView) {
+        isPopupShown = false;
         if (sView != null) {
-            CheckBox checkBox = (CheckBox)sView.findViewById(R.id.cb_vocabulary_details_remembered_item_item);
+            CheckBox checkBox = (CheckBox) sView.findViewById(R.id.cb_vocabulary_details_remembered_item_item);
 //            mVocabularyList.get(position).setRemember(isChecked);
             Log.i("ischeck", "CHeck = " + isChecked);
             checkBox.setChecked(isChecked);
         }
+    }
+
+    /**
+     * @param sView        The view to zoom in.
+     * @param position
+     * @param isRemembered
+     */
+    public void zoomPopUpView(final View sView, final VocabularyModel tVocabularyModel, int position, PopupCloseListener sListener, boolean isRemembered) {
+        isPopupShown = true;
+        if(mVocabularyPopUpHandler == null) {
+            mVocabularyPopUpHandler = new VocabularyDetailsPopupHandler(getActivity());
+        }
+        mVocabularyPopUpHandler.showVocabularyPopup(sView, mExpandedImageView, mPopupLayout, mPopupContainer, tVocabularyModel, position, sListener, isRemembered);
+    }
+    public boolean getPopupStatus(){
+        return isPopupShown;
+    }
+
+    public void hidePopup() {
+        isPopupShown = false;
+        mVocabularyPopUpHandler.closedPopup();
     }
 }

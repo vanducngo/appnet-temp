@@ -3,14 +3,18 @@ package challenges.sutrix.androidappnetclient.activity;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.Toast;
 
+import appnetmedia.lib.customdialog.CustomLayoutDialog;
 import appnetmedia.lib.customdialog.SweetAlertDialog;
 import challenges.sutrix.androidappnetclient.R;
 
 /**
  * Created by root on 13/08/2015.
  */
-public class SampleCustomDialogActivity extends BaseActivity implements View.OnClickListener {
+public class SampleCustomDialogActivity extends BaseActivity implements View.OnClickListener, CustomLayoutDialog.OnSweetClickListener {
 
     private int i = -1;
 
@@ -27,11 +31,32 @@ public class SampleCustomDialogActivity extends BaseActivity implements View.OnC
         findViewById(R.id.warning_cancel_test).setOnClickListener(this);
         findViewById(R.id.custom_img_test).setOnClickListener(this);
         findViewById(R.id.progress_dialog).setOnClickListener(this);
+        findViewById(R.id.custom_layout_dialog).setOnClickListener(this);
+
     }
+
+    private boolean isRememberPopupChecked;
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.custom_layout_dialog:
+                View child = getLayoutInflater().inflate(R.layout.vocabulary_details_popup_layout, null);
+                CheckBox mPopupCheckbox = (CheckBox) child.findViewById(R.id.cb_vocabulary_popup_remember);
+
+                mPopupCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                        isRememberPopupChecked = isChecked;
+                    }
+                });
+
+                new CustomLayoutDialog(this, SweetAlertDialog.CUSTOM_IMAGE_TYPE)
+                        .setCustomLayout(child)
+                        .setCancelClickListener(SampleCustomDialogActivity.this)
+                        .setConfirmClickListener(SampleCustomDialogActivity.this)
+                        .show();
+                break;
             case R.id.basic_test:
                 // default title "Here's a message!"
                 SweetAlertDialog sd = new SweetAlertDialog(this);
@@ -132,7 +157,7 @@ public class SampleCustomDialogActivity extends BaseActivity implements View.OnC
                     public void onTick(long millisUntilFinished) {
                         // you can change the progress bar color by ProgressHelper every 800 millis
                         i++;
-                        switch (i){
+                        switch (i) {
                             case 0:
                                 pDialog.getProgressHelper().setBarColor(getResources().getColor(R.color.blue_btn_bg_color));
                                 break;
@@ -166,5 +191,12 @@ public class SampleCustomDialogActivity extends BaseActivity implements View.OnC
                 }.start();
                 break;
         }
+    }
+
+
+    @Override
+    public void onClick(CustomLayoutDialog sweetAlertDialog, boolean isConfirmed) {
+        sweetAlertDialog.dismissWithAnimation();
+        Toast.makeText(this, "Button " + isConfirmed + " click - checkbox = " + isRememberPopupChecked, Toast.LENGTH_SHORT).show();
     }
 }

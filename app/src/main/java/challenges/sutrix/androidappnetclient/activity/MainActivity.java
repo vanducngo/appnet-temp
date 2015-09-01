@@ -1,8 +1,6 @@
 package challenges.sutrix.androidappnetclient.activity;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -16,9 +14,6 @@ import org.json.JSONObject;
 
 import challenges.sutrix.androidappnetclient.R;
 import challenges.sutrix.androidappnetclient.function.overview.OverviewFragment;
-import challenges.sutrix.androidappnetclient.function.vocabulary.VocabularyDetailsPopup;
-import challenges.sutrix.androidappnetclient.function.vocabulary.listener.PopupCloseListener;
-import challenges.sutrix.androidappnetclient.function.vocabulary.model.VocabularyModel;
 import challenges.sutrix.androidappnetclient.utils.PreferenceUtils;
 
 
@@ -132,19 +127,6 @@ public class MainActivity extends BaseActivity implements GraphRequest.GraphJSON
         PreferenceUtils.remove(getApplicationContext(), PreferenceUtils.PREF_LOGIN_NAME);
         PreferenceUtils.remove(getApplicationContext(), PreferenceUtils.PREF_LOGIN_EMAIL);
         PreferenceUtils.remove(getApplicationContext(), PreferenceUtils.PREF_USER_IMAGE);
-    }
-
-    /**
-     * @param sView  The view to zoom in.
-     * @param position
-     * @param isRemembered
-     */
-    public void zoomPopUpView(final View sView, final VocabularyModel tVocabularyModel, int position, PopupCloseListener sListener, boolean isRemembered) {
-        View container = findViewById(R.id.container);
-        RelativeLayout expandedImageView = (RelativeLayout) findViewById(R.id.expanded_layout);
-        RelativeLayout tPopupLayout = (RelativeLayout)findViewById(R.id.rl_vocabulary_popup);
-        VocabularyDetailsPopup popup = new VocabularyDetailsPopup(this);
-        popup.showVocabularyPopup(sView, expandedImageView, tPopupLayout, container, tVocabularyModel, position, sListener, isRemembered);
     }
 
 }

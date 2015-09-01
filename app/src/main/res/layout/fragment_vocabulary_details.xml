@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/container"
     android:background="@android:color/white">
 
     <TextView
@@ -21,4 +22,16 @@
         android:background="@android:color/white"
         android:divider="#FFFFFF"
         android:dividerHeight="5dp"></ListView>
+
+    <RelativeLayout
+        android:id="@+id/expanded_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/grey_half_transparent"
+        android:visibility="invisible">
+        <include
+            android:id="@+id/rl_vocabulary_popup"
+            layout="@layout/vocabulary_details_popup_view"
+            />
+    </RelativeLayout>
 </RelativeLayout>

@@ -39,15 +39,4 @@
         </android.support.v4.widget.DrawerLayout>
 
     </LinearLayout>
-
-    <RelativeLayout
-        android:id="@+id/expanded_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="invisible">
-            <include
-                android:id="@+id/rl_vocabulary_popup"
-                layout="@layout/vocabulary_details_popup_view"
-            />
-    </RelativeLayout>
 </FrameLayout>

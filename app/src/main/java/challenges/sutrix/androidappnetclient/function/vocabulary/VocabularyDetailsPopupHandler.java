@@ -24,13 +24,16 @@ import challenges.sutrix.androidappnetclient.function.vocabulary.model.Vocabular
 /**
  * Created by root on 27/08/2015.
  */
-public class VocabularyDetailsPopup {
+public class VocabularyDetailsPopupHandler {
     private final Context mContext;
     private AnimatorSet mCurrentAnimator;
     private long mShortAnimationDuration;
-    private RelativeLayout expandedImageView;
+    private RelativeLayout mExpandedImageView;
+    private Rect startBounds;
+    private float startScaleFinal;
+    private View mView;
 
-    public VocabularyDetailsPopup(Context sContext){
+    public VocabularyDetailsPopupHandler(Context sContext){
         this.mContext = sContext;
         mShortAnimationDuration = sContext.getResources().getInteger(android.R.integer.config_shortAnimTime);
     }
@@ -43,6 +46,8 @@ public class VocabularyDetailsPopup {
      * @param isRemembered
      */
     public void showVocabularyPopup(final View sView, final RelativeLayout expandedImageView, final View tPopupLayout, final View container, VocabularyModel tVocabularyModel, final int position, final PopupCloseListener sListener, boolean isRemembered) {
+        this.mExpandedImageView = expandedImageView;
+        this.mView = sView;
         // If there's an animation in progress, cancel it immediately and proceed with this one.
         if (mCurrentAnimator != null) {
             return;
@@ -51,7 +56,7 @@ public class VocabularyDetailsPopup {
 
         // Calculate the starting and ending bounds for the zoomed-in image. This step
         // involves lots of math. Yay, math.
-        final Rect startBounds = new Rect();
+        startBounds = new Rect();
         final Rect finalBounds = new Rect();
         final Point globalOffset = new Point();
 
@@ -131,12 +136,12 @@ public class VocabularyDetailsPopup {
         
         Button tBtnOk = (Button)tPopupLayout.findViewById(R.id.btn_vocabulary_popup_ok);
 
-        final float startScaleFinal = startScale;
+        startScaleFinal = startScale;
         tBtnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sListener.onPopupButtonOkClicked(tCbRemembered.isChecked(), position, sView);
-                OpenClosedPopup(expandedImageView,startBounds,startScaleFinal,sView);
+                closedPopup();
 
             }
         });
@@ -152,14 +157,13 @@ public class VocabularyDetailsPopup {
         expandedImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                OpenClosedPopup(expandedImageView, startBounds, startScaleFinal, sView);
+//                closedPopup(mExpandedImageView, startBounds, startScaleFinal, mView);
 
             }
         });
     }
 
-    private void OpenClosedPopup(final RelativeLayout expandedImageView, final Rect startBounds,
-                                 final float startScaleFinal, final View sView){
+    public void closedPopup(){
         if (mCurrentAnimator != null) {
             mCurrentAnimator.cancel();
         }
@@ -168,26 +172,26 @@ public class VocabularyDetailsPopup {
         // original values.
         AnimatorSet set = new AnimatorSet();
         set
-                .play(ObjectAnimator.ofFloat(expandedImageView, View.X, startBounds.centerX()))
-                .with(ObjectAnimator.ofFloat(expandedImageView, View.Y, startBounds.centerY()))
+                .play(ObjectAnimator.ofFloat(mExpandedImageView, View.X, startBounds.centerX()))
+                .with(ObjectAnimator.ofFloat(mExpandedImageView, View.Y, startBounds.centerY()))
                 .with(ObjectAnimator
-                        .ofFloat(expandedImageView, View.SCALE_X, startScaleFinal))
+                        .ofFloat(mExpandedImageView, View.SCALE_X, startScaleFinal))
                 .with(ObjectAnimator
-                        .ofFloat(expandedImageView, View.SCALE_Y, startScaleFinal));
+                        .ofFloat(mExpandedImageView, View.SCALE_Y, startScaleFinal));
         set.setDuration(mShortAnimationDuration);
         set.setInterpolator(new DecelerateInterpolator());
         set.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                sView.setAlpha(1f);
-                expandedImageView.setVisibility(View.GONE);
+                mView.setAlpha(1f);
+                mExpandedImageView.setVisibility(View.GONE);
                 mCurrentAnimator = null;
             }
 
             @Override
             public void onAnimationCancel(Animator animation) {
-                sView.setAlpha(1f);
-                expandedImageView.setVisibility(View.GONE);
+                mView.setAlpha(1f);
+                mExpandedImageView.setVisibility(View.GONE);
                 mCurrentAnimator = null;
             }
         });

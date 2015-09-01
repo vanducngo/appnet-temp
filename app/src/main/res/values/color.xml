@@ -8,4 +8,9 @@
     <color name="orange2">#FFCC99</color>
     <color name="light_grey">#eeeeee</color>
     <color name="grey">#ebebeb</color>
+    <color name="tight_grey">#555555</color>
+    <color name="grey_half_transparent">#66000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="blue">#007EFF</color>
 </resources>
