@@ -5,7 +5,6 @@ import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.Toast;
 
 import appnetmedia.lib.customdialog.CustomLayoutDialog;
 import appnetmedia.lib.customdialog.SweetAlertDialog;
@@ -51,7 +50,7 @@ public class SampleCustomDialogActivity extends BaseActivity implements View.OnC
                     }
                 });
 
-                new CustomLayoutDialog(this, SweetAlertDialog.CUSTOM_IMAGE_TYPE)
+                new CustomLayoutDialog(this)
                         .setCustomLayout(child)
                         .setCancelClickListener(SampleCustomDialogActivity.this)
                         .setConfirmClickListener(SampleCustomDialogActivity.this)
@@ -197,6 +196,6 @@ public class SampleCustomDialogActivity extends BaseActivity implements View.OnC
     @Override
     public void onClick(CustomLayoutDialog sweetAlertDialog, boolean isConfirmed) {
         sweetAlertDialog.dismissWithAnimation();
-        Toast.makeText(this, "Button " + isConfirmed + " click - checkbox = " + isRememberPopupChecked, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Button " + isConfirmed + " click - checkbox = " + isRememberPopupChecked, Toast.LENGTH_SHORT).show();
     }
 }

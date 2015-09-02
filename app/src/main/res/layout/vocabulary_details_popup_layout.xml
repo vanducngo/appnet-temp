@@ -49,7 +49,7 @@
                 android:textSize="21sp" />
 
             <TextView
-                android:id="@+id/tv_vocabulary_details_meaning_popup"
+                android:id="@+id/tv_vocabulary_details_vi_meaning_popup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -61,8 +61,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -70,28 +70,33 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="0.25"
-                    android:src="@drawable/ic_previous_word" />
+                    android:clickable="true"
+                    android:src="@drawable/selector_btn_previous_word" />
+
+                <ImageView
+                    android:id="@+id/iv_vocabulary_details_speak_popup"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:clickable="true"
+                    android:layout_weight="0.25"
+                    android:src="@drawable/selector_btn_speak_word" />
 
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
+                    android:clickable="true"
                     android:layout_weight="0.25"
-                    android:src="@drawable/ic_speak_word" />
+                    android:src="@drawable/selector_btn_record_word" />
 
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
+                    android:clickable="true"
                     android:layout_weight="0.25"
-                    android:src="@drawable/ic_record_word" />
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:layout_weight="0.25"
-                    android:src="@drawable/ic_next_word" />
+                    android:src="@drawable/selector_btn_next_word" />
             </LinearLayout>
 
             <CheckBox

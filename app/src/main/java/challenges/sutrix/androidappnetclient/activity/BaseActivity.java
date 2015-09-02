@@ -21,14 +21,13 @@ import java.util.Locale;
 
 import challenges.sutrix.androidappnetclient.R;
 import challenges.sutrix.androidappnetclient.adapter.SlideMenuAdapter;
-import challenges.sutrix.androidappnetclient.function.listening.ListeningFragment;
-import challenges.sutrix.androidappnetclient.function.examination.ExaminationFragment;
-import challenges.sutrix.androidappnetclient.function.overview.OverviewFragment;
 import challenges.sutrix.androidappnetclient.fragment.MainFragment;
+import challenges.sutrix.androidappnetclient.function.examination.ExaminationFragment;
+import challenges.sutrix.androidappnetclient.function.grammar.GrammarFragment;
+import challenges.sutrix.androidappnetclient.function.listening.ListeningFragment;
+import challenges.sutrix.androidappnetclient.function.overview.OverviewFragment;
 import challenges.sutrix.androidappnetclient.function.reading.ReadingFragment;
 import challenges.sutrix.androidappnetclient.function.vocabulary.VocabularyCategoryFragment;
-import challenges.sutrix.androidappnetclient.function.grammar.GrammarFragment;
-import challenges.sutrix.androidappnetclient.function.vocabulary.VocabularyDetailsFragment;
 import challenges.sutrix.androidappnetclient.listener.RecyclerItemClickListener;
 import challenges.sutrix.androidappnetclient.utils.KeyboardUtils;
 
@@ -47,7 +46,7 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
     private DrawerLayout Drawer;    // Declaring DrawerLayout
     private ActionBarDrawerToggle mDrawerToggle;
 
-    private boolean isDebugMode = true;
+    private boolean isDebugMode = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -257,28 +256,14 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
             finish();
         } else {
             //Get current fragment
-            boolean isPopFragmentOutOfBackStack = false;
             Fragment tFragment = getCurrentFragment();
-            if(tFragment instanceof VocabularyDetailsFragment){
-                boolean isPopupShown = ((VocabularyDetailsFragment)tFragment).getPopupStatus();
-                if(isPopupShown){
-                    isPopFragmentOutOfBackStack = false;
-                    ((VocabularyDetailsFragment)tFragment).hidePopup();
-                }else{
-                    isPopFragmentOutOfBackStack = true;
-                }
-            }else {
-                isPopFragmentOutOfBackStack = true;
-            }
 
-            if(isPopFragmentOutOfBackStack){
-                KeyboardUtils.hideKeyboard(this);
-                FragmentManager fm = this.getSupportFragmentManager();
-                fm.popBackStackImmediate();
+            KeyboardUtils.hideKeyboard(this);
+            FragmentManager fm = this.getSupportFragmentManager();
+            fm.popBackStackImmediate();
 
-                //set selected menu item
-                mAdapter.setSelectedOnBackPress(tFragment);
-            }
+            //set selected menu item
+            mAdapter.setSelectedOnBackPress(tFragment);
         }
     }
 
@@ -298,14 +283,14 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
     public void onInit(int i) {
         if(mNotificationVoice !=null )
         {
-            mNotificationVoice.setLanguage(Locale.ENGLISH);
+            mNotificationVoice.setLanguage(Locale.US);
             mNotificationVoice.stop();
         }else{
             showToast(R.string.error_text_to_speech_string);
         }
     }
 
-    @SuppressWarnings("deprecation")
+
     public void speak(String text) {
         if(!isDebugMode) {
             if (mNotificationVoice != null) {

@@ -121,6 +121,11 @@ public class MainActivity extends BaseActivity implements GraphRequest.GraphJSON
         super.onDestroy();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
     private void LogoutFB(){
         LoginManager.getInstance().logOut();
         PreferenceUtils.remove(getApplicationContext(), PreferenceUtils.PREF_FACEBOOK_USER_ID);

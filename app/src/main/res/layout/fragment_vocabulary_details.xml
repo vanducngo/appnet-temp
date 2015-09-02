@@ -23,15 +23,4 @@
         android:divider="#FFFFFF"
         android:dividerHeight="5dp"></ListView>
 
-    <RelativeLayout
-        android:id="@+id/expanded_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/grey_half_transparent"
-        android:visibility="invisible">
-        <include
-            android:id="@+id/rl_vocabulary_popup"
-            layout="@layout/vocabulary_details_popup_view"
-            />
-    </RelativeLayout>
 </RelativeLayout>
