@@ -2,6 +2,8 @@ package challenges.sutrix.androidappnetclient.activity;
 
 import android.app.Application;
 
+import com.activeandroid.ActiveAndroid;
+
 import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
 
@@ -18,7 +20,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        ActiveAndroid.initialize(this);
         // The following line triggers the initialization of ACRA
 //        ACRA.init(this);
     }

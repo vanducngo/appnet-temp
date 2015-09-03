@@ -1,21 +1,46 @@
 package challenges.sutrix.androidappnetclient.function.vocabulary.model;
 
-/**
- * Created by root on 16/07/2015.
- */
-public class VocabularyModel {
-    private long id;
-    private String word;
-    private String category;
-    private String meanVietnamese;
-    private String meanEnglish;
-    private String type;
-    private String example;
-    private byte[] image;
-    private boolean isRemember;
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
 
-    public long getId() {
-        return id;
+/**reated by root on 16/07/2015.
+ */
+@Table(name = "Vocabularies", id = "_id")
+public class VocabularyModel extends Model{
+    @Column(name = "id", unique = true)
+    private long id;
+    @Column(name = "word")
+    private  String word;
+    @Column(name = "Category", onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE.CASCADE)
+    private  VocabularyCategoryModel category;
+    @Column(name = "phonetic")
+    private String phonetic;
+    @Column(name = "ShortMeanVietnamese")
+    private  String ShortMeanVietnamese;
+    @Column(name = "meanVietnamese")
+    private  String meanVietnamese;
+    @Column(name = "meanEnglish")
+    private  String meanEnglish;
+    @Column(name = "type")
+    private  String type;
+    @Column(name = "example")
+    private  String example;
+    @Column(name = "exampleMeaning")
+    private  String exampleMeaning;
+    @Column(name = "pharagraph")
+    private  String pharagraph;
+    @Column(name = "image")
+    private  byte[] image;
+    @Column(name = "isRemember")
+    private  boolean isRemember;
+
+    public boolean isRemember() {
+        return isRemember;
+    }
+
+    public void setIsRemember(boolean isRemember) {
+        this.isRemember = isRemember;
     }
 
     public void setId(long id) {
@@ -30,12 +55,28 @@ public class VocabularyModel {
         this.word = word;
     }
 
-    public String getCategory() {
+    public VocabularyCategoryModel getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(VocabularyCategoryModel category) {
         this.category = category;
+    }
+
+    public String getPhonetic() {
+        return phonetic;
+    }
+
+    public void setPhonetic(String phonetic) {
+        this.phonetic = phonetic;
+    }
+
+    public String getShortMeanVietnamese() {
+        return ShortMeanVietnamese;
+    }
+
+    public void setShortMeanVietnamese(String shortMeanVietnamese) {
+        ShortMeanVietnamese = shortMeanVietnamese;
     }
 
     public String getMeanVietnamese() {
@@ -70,19 +111,27 @@ public class VocabularyModel {
         this.example = example;
     }
 
+    public String getExampleMeaning() {
+        return exampleMeaning;
+    }
+
+    public void setExampleMeaning(String exampleMeaning) {
+        this.exampleMeaning = exampleMeaning;
+    }
+
+    public String getPharagraph() {
+        return pharagraph;
+    }
+
+    public void setPharagraph(String pharagraph) {
+        this.pharagraph = pharagraph;
+    }
+
     public byte[] getImage() {
         return image;
     }
 
     public void setImage(byte[] image) {
         this.image = image;
-    }
-
-    public boolean isRemember() {
-        return isRemember;
-    }
-
-    public void setRemember(boolean isRemember) {
-        this.isRemember = isRemember;
     }
 }
