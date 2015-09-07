@@ -12,7 +12,7 @@ public class VocabularyModel extends Model{
     private long id;
     @Column(name = "word")
     private  String word;
-    @Column(name = "Category", onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE.CASCADE)
+    @Column(name = "Category", onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
     private  VocabularyCategoryModel category;
     @Column(name = "phonetic")
     private String phonetic;
@@ -39,7 +39,7 @@ public class VocabularyModel extends Model{
         return isRemember;
     }
 
-    public void setIsRemember(boolean isRemember) {
+    public void setRemember(boolean isRemember) {
         this.isRemember = isRemember;
     }
 
