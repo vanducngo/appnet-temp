@@ -19,9 +19,10 @@ import challenges.sutrix.androidappnetclient.R;
 import challenges.sutrix.androidappnetclient.activity.MainActivity;
 import challenges.sutrix.androidappnetclient.api.APIConstants;
 
-public class GrammarFragment extends Fragment{
+public class GrammarFragment extends Fragment {
 
     private TextView mTvTitle;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -43,25 +44,26 @@ public class GrammarFragment extends Fragment{
                     @Override
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
-                        mTvTitle.setText("Response is: "+ response.toString());
+                        mTvTitle.setText("Response is: " + response.toString());
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                mTvTitle.setText("That didn't work!");
-            }
-        });
-// Add the request to the RequestQueue.
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        mTvTitle.setText("That didn't work!");
+                    }
+                });
+        // Add the request to the RequestQueue.
         queue.add(stringRequest);
     }
 
     private void initView(View view) {
-        mTvTitle = (TextView)view.findViewById(R.id.tv_grammar_title);
+        mTvTitle = (TextView) view.findViewById(R.id.tv_grammar_title);
     }
 
     @Override
     public void onResume() {
-        ((MainActivity)getActivity()).speak("We're in Rock and Roll fragment");
+        ((MainActivity) getActivity()).speak("We're in Rock and Roll fragment");
         super.onResume();
     }
 }

@@ -12,8 +12,8 @@ public class VocabularyModel extends Model{
     private long id;
     @Column(name = "word")
     private  String word;
-    @Column(name = "Category", onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
-    private  VocabularyCategoryModel category;
+    @Column(name = "categoryId")
+    private long categoryId;
     @Column(name = "phonetic")
     private String phonetic;
     @Column(name = "ShortMeanVietnamese")
@@ -28,8 +28,8 @@ public class VocabularyModel extends Model{
     private  String example;
     @Column(name = "exampleMeaning")
     private  String exampleMeaning;
-    @Column(name = "pharagraph")
-    private  String pharagraph;
+    @Column(name = "paragraph")
+    private  String paragraph;
     @Column(name = "image")
     private  byte[] image;
     @Column(name = "isRemember")
@@ -43,8 +43,12 @@ public class VocabularyModel extends Model{
         this.isRemember = isRemember;
     }
 
-    public void setId(long id) {
+    public void setVocabularyId(long id) {
         this.id = id;
+    }
+
+    public long getVocabularyId(){
+        return id;
     }
 
     public String getWord() {
@@ -55,12 +59,12 @@ public class VocabularyModel extends Model{
         this.word = word;
     }
 
-    public VocabularyCategoryModel getCategory() {
-        return category;
+    public long getCategory() {
+        return categoryId;
     }
 
-    public void setCategory(VocabularyCategoryModel category) {
-        this.category = category;
+    public void setCategory(long categoryId) {
+        this.categoryId = categoryId;
     }
 
     public String getPhonetic() {
@@ -119,12 +123,12 @@ public class VocabularyModel extends Model{
         this.exampleMeaning = exampleMeaning;
     }
 
-    public String getPharagraph() {
-        return pharagraph;
+    public String getParagraph() {
+        return paragraph;
     }
 
-    public void setPharagraph(String pharagraph) {
-        this.pharagraph = pharagraph;
+    public void setParagraph(String paragraph) {
+        this.paragraph = paragraph;
     }
 
     public byte[] getImage() {

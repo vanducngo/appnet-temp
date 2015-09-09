@@ -9,12 +9,18 @@ import com.activeandroid.annotation.Table;
  */
 @Table(name="VocabularyCategories", id = "_id")
 public class VocabularyCategoryModel extends Model{
+
     @Column(name = "id",unique = true)
     private long id;
+
     @Column(name = "name")
     private String name;
+
     @Column(name = "meaning")
     private String meaning;
+
+    @Column(name = "description")
+    private String description;
 
     public VocabularyCategoryModel(){
         super();
@@ -26,8 +32,12 @@ public class VocabularyCategoryModel extends Model{
         this.meaning = meaning;
     }
 
-    public void setId(long id) {
+    public void setCategoryId(long id) {
         this.id = id;
+    }
+
+    public long getCategoryId(){
+        return id;
     }
 
     public String getName() {
@@ -44,5 +54,13 @@ public class VocabularyCategoryModel extends Model{
 
     public void setMeaning(String meaning) {
         this.meaning = meaning;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
