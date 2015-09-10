@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -37,8 +38,8 @@ public class CustomLayoutDialog extends Dialog implements View.OnClickListener {
     private View mCustomLayoutView;
 
 
-    public static interface OnSweetClickListener {
-        public void onClick(CustomLayoutDialog sweetAlertDialog, boolean isConfirmed);
+    public interface OnSweetClickListener {
+        void onClick(CustomLayoutDialog sweetAlertDialog, boolean isConfirmed);
     }
 
 
@@ -129,7 +130,7 @@ public class CustomLayoutDialog extends Dialog implements View.OnClickListener {
 
     public CustomLayoutDialog setCustomLayout(View mLayoutView) {
         this.mCustomLayoutView = mLayoutView;
-
+        showCancelButton(mShowCancel);
         return this;
     }
 
@@ -144,6 +145,7 @@ public class CustomLayoutDialog extends Dialog implements View.OnClickListener {
             mLayoutContainer.removeAllViews();
             mLayoutContainer.addView(mCustomLayoutView);
         }
+        showCancelButton(mShowCancel);
     }
 
     public boolean isShowCancelButton() {
@@ -152,6 +154,7 @@ public class CustomLayoutDialog extends Dialog implements View.OnClickListener {
 
     public CustomLayoutDialog showCancelButton(boolean isShow) {
         mShowCancel = isShow;
+        Log.i("Test hide cancel", String.valueOf(mShowCancel));
         if (mCancelButton != null) {
             mCancelButton.setVisibility(mShowCancel ? View.VISIBLE : View.GONE);
         }

@@ -50,6 +50,8 @@
 
     <!-- Vocabulary -->
     <string name="is_remembered_string">Đã nhớ</string>
+    <string name="vocabulary_reach_end_string">Khong con tu dang sau</string>
+    <string name="vocabulary_reach_begining_string">Khong con tu dang truoc</string>
 
     <string-array name="vocabulary_type">
         <item>Contract</item>
