@@ -37,7 +37,6 @@ public class CustomLayoutDialog extends Dialog implements View.OnClickListener {
     private boolean mCloseFromCancel;
     private View mCustomLayoutView;
 
-
     public interface OnSweetClickListener {
         void onClick(CustomLayoutDialog sweetAlertDialog, boolean isConfirmed);
     }

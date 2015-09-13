@@ -87,6 +87,7 @@ public class ProgressWheel extends View {
 
         parseAttributes(context.obtainStyledAttributes(attrs,
                 R.styleable.ProgressWheel));
+        setBackgroundResource(R.drawable.icon_speak_live);
     }
 
     /**

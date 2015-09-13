@@ -27,7 +27,7 @@ import challenges.sutrix.androidappnetclient.utils.Constants;
 /**
  * Created by root on 27/05/2015.
  */
-public class OverviewFragment extends Fragment implements View.OnClickListener, RecognitionListener {
+    public class OverviewFragment extends Fragment implements View.OnClickListener, RecognitionListener {
     private TextView mTvTitle;
     private Intent mSpeechRecognitionIntent;
     private SpeechRecognizer mSpeedRecognizer = null;
@@ -69,7 +69,6 @@ public class OverviewFragment extends Fragment implements View.OnClickListener, 
         if (view.equals(mTvTitle)) {
             Toast.makeText(getActivity(), "Start",Toast.LENGTH_SHORT).show();
             mSpeedRecognizer.startListening(mSpeechRecognitionIntent);
-
             Timer buttonTimer = new Timer();
             buttonTimer.schedule(new TimerTask() {
 
@@ -90,7 +89,7 @@ public class OverviewFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        Log.i("onActivityResult", "onActivityResult");
         switch (requestCode) {
             case Constants.SPEECH_REQUEST_CODE: {
                 if (resultCode == Activity.RESULT_OK && null != data) {

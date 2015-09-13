@@ -1,6 +1,8 @@
 package challenges.sutrix.androidappnetclient.function.vocabulary;
 
 import android.os.Bundle;
+import android.speech.RecognitionListener;
+import android.speech.SpeechRecognizer;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
