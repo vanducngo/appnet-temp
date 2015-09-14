@@ -99,6 +99,7 @@ public class VocabularyPopup extends CustomLayoutDialog implements RecognitionLi
                 @Override
                 public void onClick(View v) {
                     if(ConnectionUtils.isInternetAvailable(mContext)){
+                        mIvRecordSpeech.setEnabled(false);
                         showRecordingDialog();
                     }else{
                         Toast.makeText(mContext,"No internet",Toast.LENGTH_SHORT).show();
@@ -148,6 +149,7 @@ public class VocabularyPopup extends CustomLayoutDialog implements RecognitionLi
 
             public void onFinish() {
                 Log.i("Onfinish", "onFinish()");
+                mIvRecordSpeech.setEnabled(true);
                 i = -1;
                 mSpeedRecognizer.stopListening();
             }
@@ -232,17 +234,17 @@ public class VocabularyPopup extends CustomLayoutDialog implements RecognitionLi
     @Override
     public void onResults(Bundle results) {
         isRecordSuccess = true;
-        Log.i("onResults", String.valueOf(results));
+
         ArrayList<String> matches = results
                 .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
         String tStrResult = matches.get(0);
-        Toast.makeText(mContext, tStrResult,Toast.LENGTH_SHORT).show();
-        if(mVocabularyModel.getWord().trim().equals(tStrResult.trim())){
+        Log.i("onResults", tStrResult + " - " + mVocabularyModel.getWord() );
+        if (mVocabularyModel.getWord().toLowerCase().equals(tStrResult.toLowerCase())){
             pDialog.setTitleText("Success!")
                     .setConfirmText("OK")
                     .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
         }else{
-            pDialog.setTitleText("Fails!")
+            pDialog.setTitleText("Not match!\nYou speak: " + tStrResult + "\nThe word: " + mVocabularyModel.getWord())
                     .setConfirmText("OK")
                     .changeAlertType(SweetAlertDialog.ERROR_TYPE);
         }
