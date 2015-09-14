@@ -46,6 +46,7 @@ public class VocabularyPopup extends CustomLayoutDialog implements RecognitionLi
     private Intent mSpeechRecognitionIntent;
     private SpeechRecognizer mSpeedRecognizer = null;
     private SweetAlertDialog pDialog;
+    private boolean isRecordSuccess = false;
 
     public VocabularyPopup(Activity context, VocabularyModel sVocabularyModel,NextPreviousWordListener sAnotherWordListener ) {
         super(context);
@@ -124,6 +125,7 @@ public class VocabularyPopup extends CustomLayoutDialog implements RecognitionLi
 //        }
         pDialog.show();
         pDialog.setCancelable(false);
+        isRecordSuccess = false; //Flag
         mSpeedRecognizer.startListening(mSpeechRecognitionIntent);
         new CountDownTimer(800 * 3, 800) {
             public void onTick(long millisUntilFinished) {
@@ -137,18 +139,6 @@ public class VocabularyPopup extends CustomLayoutDialog implements RecognitionLi
                         pDialog.getProgressHelper().setBarColor(mContext.getResources().getColor(R.color.material_deep_teal_50));
                         break;
                     case 2:
-                        pDialog.getProgressHelper().setBarColor(mContext.getResources().getColor(R.color.success_stroke_color));
-                        break;
-                    case 3:
-                        pDialog.getProgressHelper().setBarColor(mContext.getResources().getColor(R.color.material_deep_teal_20));
-                        break;
-                    case 4:
-                        pDialog.getProgressHelper().setBarColor(mContext.getResources().getColor(R.color.material_blue_grey_80));
-                        break;
-                    case 5:
-                        pDialog.getProgressHelper().setBarColor(mContext.getResources().getColor(R.color.warning_stroke_color));
-                        break;
-                    case 6:
                         pDialog.getProgressHelper().setBarColor(mContext.getResources().getColor(R.color.success_stroke_color));
                         break;
                     default:
@@ -194,6 +184,9 @@ public class VocabularyPopup extends CustomLayoutDialog implements RecognitionLi
         super.onClick(v);
     }
 
+
+    //SpeedRecognizer listener
+
     @Override
     public void onReadyForSpeech(Bundle params) {
 
@@ -219,17 +212,26 @@ public class VocabularyPopup extends CustomLayoutDialog implements RecognitionLi
 
     }
 
+
+
     @Override
     public void onError(int error) {
-        Log.i("onError", String.valueOf(error));
-        if(pDialog != null){
-            pDialog.dismissWithAnimation();
-            Toast.makeText(mContext, "Error: " + error,Toast.LENGTH_SHORT).show();
+        Log.i("onError", String.valueOf(error) + " - " +String.valueOf(isRecordSuccess));
+        // Sometime onError will get called after onResults so we keep a boolean to ignore error also
+        if(isRecordSuccess){
+            return;
+        }else {
+
+            if (pDialog != null) {
+                pDialog.dismissWithAnimation();
+                Toast.makeText(mContext, "Error: " + error, Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
     @Override
     public void onResults(Bundle results) {
+        isRecordSuccess = true;
         Log.i("onResults", String.valueOf(results));
         ArrayList<String> matches = results
                 .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
