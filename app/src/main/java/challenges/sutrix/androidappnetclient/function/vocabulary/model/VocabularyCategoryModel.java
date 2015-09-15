@@ -3,11 +3,14 @@ package challenges.sutrix.androidappnetclient.function.vocabulary.model;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Select;
+
+import java.util.List;
 
 /**
  * Created by root on 31/08/2015.
  */
-@Table(name="VocabularyCategories", id = "_id")
+@Table(name="vocabulary_category", id = "id")
 public class VocabularyCategoryModel extends Model{
 
     @Column(name = "id",unique = true)
@@ -63,4 +66,13 @@ public class VocabularyCategoryModel extends Model{
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public static List<VocabularyCategoryModel> getAll() {
+        // This is how you execute a query
+        return new Select()
+                .from(VocabularyCategoryModel.class)
+                .orderBy("name ASC")
+                .execute();
+    }
+
 }

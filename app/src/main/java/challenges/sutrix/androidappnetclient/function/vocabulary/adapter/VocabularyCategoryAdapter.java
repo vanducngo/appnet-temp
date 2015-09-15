@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import challenges.sutrix.androidappnetclient.R;
 import challenges.sutrix.androidappnetclient.function.vocabulary.model.VocabularyCategoryModel;
@@ -20,9 +20,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class VocabularyCategoryAdapter extends BaseAdapter {
     private Activity mContext;
-    private ArrayList<VocabularyCategoryModel> mVocabularyCategoryList;
+    private List<VocabularyCategoryModel> mVocabularyCategoryList;
 
-    public VocabularyCategoryAdapter(Activity sContext, ArrayList<VocabularyCategoryModel> sVocabularyCategoryList) {
+    public VocabularyCategoryAdapter(Activity sContext, List<VocabularyCategoryModel> sVocabularyCategoryList) {
         this.mContext = sContext;
         this.mVocabularyCategoryList = sVocabularyCategoryList;
     }
@@ -63,7 +63,8 @@ public class VocabularyCategoryAdapter extends BaseAdapter {
             tViewHolder = (ViewHolder) sView.getTag();
         }
 
-        tViewHolder.mTvMeaning.setText(mVocabularyCategoryList.get(i).getName());
+        tViewHolder.mTvName.setText(mVocabularyCategoryList.get(i).getName());
+        tViewHolder.mTvMeaning.setText(mVocabularyCategoryList.get(i).getMeaning());
 //        tViewHolder.mIvImage.setImageResource(R.drawable.contract);
         Picasso.with(mContext).load(R.drawable.contract).into(tViewHolder.mIvImage);
 

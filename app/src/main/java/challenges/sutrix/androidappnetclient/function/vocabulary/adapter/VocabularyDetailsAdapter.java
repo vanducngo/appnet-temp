@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import challenges.sutrix.androidappnetclient.R;
 import challenges.sutrix.androidappnetclient.function.vocabulary.listener.RememberedCheckChangeListener;
@@ -24,10 +24,10 @@ import challenges.sutrix.androidappnetclient.function.vocabulary.model.Vocabular
  */
 public class VocabularyDetailsAdapter extends BaseAdapter {
     private Activity mContext;
-    private ArrayList<VocabularyModel> mVocabularyList;
+    private List<VocabularyModel> mVocabularyList;
     private RememberedCheckChangeListener mListener;
 
-    public VocabularyDetailsAdapter(Activity sContext, ArrayList<VocabularyModel> sVocabularyCategoryList, RememberedCheckChangeListener sListener) {
+    public VocabularyDetailsAdapter(Activity sContext, List<VocabularyModel> sVocabularyCategoryList, RememberedCheckChangeListener sListener) {
         this.mContext = sContext;
         this.mVocabularyList = sVocabularyCategoryList;
         this.mListener = sListener;
@@ -77,12 +77,7 @@ public class VocabularyDetailsAdapter extends BaseAdapter {
         Picasso.with(mContext).load(R.drawable.contract).into(tViewHolder.mIvImage);
 
 
-        tViewHolder.mCbRemember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                mListener.onRememberedCheckChangeListener(isChecked, position);
-            }
-        });
+        tViewHolder.mCbRemember.setOnCheckedChangeListener(null);
 
         if (mVocabularyList.get(position).isRemember()) {
             tViewHolder.mCbRemember.setChecked(true);
@@ -91,6 +86,13 @@ public class VocabularyDetailsAdapter extends BaseAdapter {
             tViewHolder.mCbRemember.setChecked(false);
             Log.i("Is remember", "false");
         }
+
+        tViewHolder.mCbRemember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                mListener.onRememberedCheckChangeListener(isChecked, position);
+            }
+        });
 
         return sView;
     }

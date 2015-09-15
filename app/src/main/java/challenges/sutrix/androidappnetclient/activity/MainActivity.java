@@ -31,6 +31,20 @@ public class MainActivity extends BaseActivity implements GraphRequest.GraphJSON
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+//        DataBaseHelper db =new DataBaseHelper(this);
+//        try {
+//            db.CopyDataBaseFromAsset();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        db.openDataBase();
+//        db.close();
+
+//        try {
+//            db.CopyDataBaseFromAsset();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
         // Retrieve and cache the system's default "short" animation time.
 //        mShortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
 

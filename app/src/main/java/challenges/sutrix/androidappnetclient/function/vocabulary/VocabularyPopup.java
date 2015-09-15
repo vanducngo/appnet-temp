@@ -238,7 +238,6 @@ public class VocabularyPopup extends CustomLayoutDialog implements RecognitionLi
         ArrayList<String> matches = results
                 .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
         String tStrResult = matches.get(0);
-        Log.i("onResults", tStrResult + " - " + mVocabularyModel.getWord() );
         if (mVocabularyModel.getWord().toLowerCase().equals(tStrResult.toLowerCase())){
             pDialog.setTitleText("Success!")
                     .setConfirmText("OK")

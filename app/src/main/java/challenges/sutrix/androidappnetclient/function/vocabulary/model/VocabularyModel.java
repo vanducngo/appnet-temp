@@ -3,44 +3,66 @@ package challenges.sutrix.androidappnetclient.function.vocabulary.model;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Select;
+
+import java.util.List;
 
 /**reated by root on 16/07/2015.
  */
-@Table(name = "Vocabularies", id = "_id")
+@Table(name = "word", id = "id")
 public class VocabularyModel extends Model{
     @Column(name = "id", unique = true)
     private long id;
+
     @Column(name = "word")
     private  String word;
-    @Column(name = "categoryId")
+
+    @Column(name = "category_id")
     private long categoryId;
-    @Column(name = "phonetic")
-    private String phonetic;
-    @Column(name = "ShortMeanVietnamese")
-    private  String ShortMeanVietnamese;
-    @Column(name = "meanVietnamese")
-    private  String meanVietnamese;
-    @Column(name = "meanEnglish")
-    private  String meanEnglish;
+
     @Column(name = "type")
     private  String type;
-    @Column(name = "example")
+
+    @Column(name = "phonetic")
+    private String phonetic;
+
+    @Column(name = "sortmean")
+    private  String shortMeanVietnamese;
+
+    @Column(name = "mean")
+    private  String meanVietnamese;
+
+    @Column(name = "synonyms")
+    private  String synonyms;
+
+    @Column(name = "sentence")
     private  String example;
-    @Column(name = "exampleMeaning")
+
+    @Column(name = "sentencemean")
     private  String exampleMeaning;
-    @Column(name = "paragraph")
+
+    @Column(name = "adequatemean")
     private  String paragraph;
-    @Column(name = "image")
-    private  byte[] image;
-    @Column(name = "isRemember")
-    private  boolean isRemember;
+
+    @Column(name = "remember")
+    private int remember;
 
     public boolean isRemember() {
+        boolean isRemember;
+        if(remember >0){
+            isRemember = true;
+        }else{
+            isRemember = false;
+        }
         return isRemember;
     }
 
     public void setRemember(boolean isRemember) {
-        this.isRemember = isRemember;
+        if(isRemember  == true){
+            remember = 1;
+        }else{
+            remember = 0;
+        }
     }
 
     public void setVocabularyId(long id) {
@@ -59,12 +81,20 @@ public class VocabularyModel extends Model{
         this.word = word;
     }
 
-    public long getCategory() {
+    public long getCategoryId() {
         return categoryId;
     }
 
-    public void setCategory(long categoryId) {
+    public void setCategoryId(long categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getPhonetic() {
@@ -76,11 +106,11 @@ public class VocabularyModel extends Model{
     }
 
     public String getShortMeanVietnamese() {
-        return ShortMeanVietnamese;
+        return shortMeanVietnamese;
     }
 
     public void setShortMeanVietnamese(String shortMeanVietnamese) {
-        ShortMeanVietnamese = shortMeanVietnamese;
+        this.shortMeanVietnamese = shortMeanVietnamese;
     }
 
     public String getMeanVietnamese() {
@@ -91,20 +121,12 @@ public class VocabularyModel extends Model{
         this.meanVietnamese = meanVietnamese;
     }
 
-    public String getMeanEnglish() {
-        return meanEnglish;
+    public String getSynonyms() {
+        return synonyms;
     }
 
-    public void setMeanEnglish(String meanEnglish) {
-        this.meanEnglish = meanEnglish;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
+    public void setSynonyms(String synonyms) {
+        this.synonyms = synonyms;
     }
 
     public String getExample() {
@@ -131,11 +153,11 @@ public class VocabularyModel extends Model{
         this.paragraph = paragraph;
     }
 
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
+    public static List<VocabularyModel> getVocabularies(long id){
+        return new Select()
+                .from(VocabularyModel.class)
+                .where("category_id = ?",id)
+                .orderBy("word ASC")
+                .execute();
     }
 }

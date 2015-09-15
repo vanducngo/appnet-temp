@@ -7,26 +7,30 @@
         style="@style/vocabulary_item_image"
         android:layout_alignParentLeft="true"
         android:src="@drawable/contract" />
-
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_toRightOf="@+id/iv_vocabulary_category_image_item"
+    android:layout_centerVertical="true"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
     <TextView
         android:id="@+id/tv_vocabulary_category_name_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/iv_vocabulary_category_image_item"
-        android:text=""
+        android:text="Van Duc Ngo"
         android:textColor="@color/black"
-        android:textSize="21sp" />
+        android:textSize="19sp" />
 
     <TextView
         android:id="@+id/tv_vocabulary_category_meaning_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/tv_vocabulary_category_name_item"
-        android:text=""
-        android:textColor="@color/black"
-        android:textSize="21sp" />
+        android:layout_above="@+id/tv_vocabulary_category_name_item"
+        android:text="meaning"
+        android:textColor="@color/blue"
+        android:textSize="16sp" />
+</LinearLayout>
+
 
     <ImageView
         android:layout_width="wrap_content"

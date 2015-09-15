@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import challenges.sutrix.androidappnetclient.R;
 import challenges.sutrix.androidappnetclient.activity.MainActivity;
@@ -22,7 +22,7 @@ import challenges.sutrix.androidappnetclient.function.vocabulary.model.Vocabular
 public class VocabularyCategoryFragment extends Fragment implements ListView.OnItemClickListener {
 
     private ListView mListView;
-    private ArrayList<VocabularyCategoryModel> mVocabularyCategoryList;
+    private List<VocabularyCategoryModel> mVocabularyCategoryList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -36,17 +36,7 @@ public class VocabularyCategoryFragment extends Fragment implements ListView.OnI
     }
 
     private void initData() {
-        String[] tVocabulary = getResources().getStringArray(R.array.vocabulary_type);
-        VocabularyCategoryModel tCategoryModel;
-        int tCategorySize = tVocabulary.length;
-        if (mVocabularyCategoryList == null) {
-            mVocabularyCategoryList = new ArrayList<>();
-            for (int i = 0; i < tCategorySize; i++) {
-                tCategoryModel = new VocabularyCategoryModel();
-                tCategoryModel.setName(tVocabulary[i]);
-                mVocabularyCategoryList.add(tCategoryModel);
-            }
-        }
+        mVocabularyCategoryList = VocabularyCategoryModel.getAll();
 
     }
 
@@ -59,16 +49,13 @@ public class VocabularyCategoryFragment extends Fragment implements ListView.OnI
 
     @Override
     public void onResume() {
-//        ((MainActivity) getActivity()).speak("We're in pop fragment");
         super.onResume();
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Bundle data = new Bundle();
-//        data.putLong(VocabularyDetailsFragment.ID
-//                , mVocabularyCategoryList.get(position).getId());
-        data.putLong(VocabularyDetailsFragment.ID, position);
+        data.putLong(VocabularyDetailsFragment.ID, mVocabularyCategoryList.get(position).getCategoryId());
         Fragment tFragment = new VocabularyDetailsFragment();
         tFragment.setArguments(data);
         ((MainActivity) getActivity()).replaceFragment(tFragment, true);

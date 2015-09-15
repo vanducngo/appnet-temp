@@ -1,8 +1,6 @@
 package challenges.sutrix.androidappnetclient.function.vocabulary;
 
 import android.os.Bundle;
-import android.speech.RecognitionListener;
-import android.speech.SpeechRecognizer;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -13,7 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import appnetmedia.lib.customdialog.CustomLayoutDialog;
 import challenges.sutrix.androidappnetclient.R;
@@ -28,7 +26,7 @@ import challenges.sutrix.androidappnetclient.function.vocabulary.model.Vocabular
 public class VocabularyDetailsFragment extends Fragment implements ListView.OnItemClickListener, RememberedCheckChangeListener, CustomLayoutDialog.OnSweetClickListener, NextPreviousWordListener {
 
     private ListView mListView;
-    private ArrayList<VocabularyModel> mVocabularyList;
+    private List<VocabularyModel> mVocabularyList;
     public static String ID = "id";
     private long mCategoryId = -1;
     private VocabularyDetailsAdapter mAdapter;
@@ -49,23 +47,24 @@ public class VocabularyDetailsFragment extends Fragment implements ListView.OnIt
     }
 
     private void initData() {
-        String[] tVocabulary = getResources().getStringArray(R.array.vocabulary_type);
-        VocabularyModel tCategoryModel;
-        int tCategorySize = tVocabulary.length;
-        if (mVocabularyList == null) {
-            mVocabularyList = new ArrayList<>();
-            for (int i = 0; i < tCategorySize; i++) {
-                tCategoryModel = new VocabularyModel();
-                tCategoryModel.setWord(tVocabulary[i]);
-                tCategoryModel.setMeanVietnamese(tVocabulary[i]);
-                tCategoryModel.setRemember(false);
-                mVocabularyList.add(tCategoryModel);
-            }
-        }
+//        String[] tVocabulary = getResources().getStringArray(R.array.vocabulary_type);
+//        VocabularyModel tCategoryModel;
+//        int tCategorySize = tVocabulary.length;
+//        if (mVocabularyList == null) {
+//            mVocabularyList = new ArrayList<>();
+//            for (int i = 0; i < tCategorySize; i++) {
+//                tCategoryModel = new VocabularyModel();
+//                tCategoryModel.setWord(tVocabulary[i]);
+//                tCategoryModel.setMeanVietnamese(tVocabulary[i]);
+//                tCategoryModel.setRemember(false);
+//                mVocabularyList.add(tCategoryModel);
+//            }
+//        }
 
 
         Bundle bundle = getArguments();
         mCategoryId = bundle.getLong(ID);
+        mVocabularyList = VocabularyModel.getVocabularies(mCategoryId);
     }
 
     private void initView(View view) {
@@ -78,8 +77,6 @@ public class VocabularyDetailsFragment extends Fragment implements ListView.OnIt
 
     @Override
     public void onResume() {
-        Toast.makeText(getActivity(), String.valueOf(mCategoryId), Toast.LENGTH_SHORT).show();
-//        ((MainActivity) getActivity()).speak("We're in pop fragment");
         super.onResume();
     }
 
@@ -99,6 +96,8 @@ public class VocabularyDetailsFragment extends Fragment implements ListView.OnIt
         //TODO update in SQLite
         Log.i("Is checked", "Checked = " + isChecked);
         mVocabularyList.get(position).setRemember(isChecked);
+        //save to database
+        mVocabularyList.get(position).save();
 
     }
 
@@ -134,7 +133,7 @@ public class VocabularyDetailsFragment extends Fragment implements ListView.OnIt
 
     @Override
     public void onPreviousWordClick() {
-        if(mCurrentItemPosition == mVocabularyList.size()-1) {
+        if(mCurrentItemPosition == 0) {
             Toast.makeText(getActivity(), getString(R.string.vocabulary_reach_begining_string), Toast.LENGTH_SHORT).show();
         }else{
             mCurrentItemPosition--;
