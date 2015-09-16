@@ -74,7 +74,7 @@ public class VocabularyDetailsAdapter extends BaseAdapter {
         }
 
         tViewHolder.mTvName.setText(SecurityUtils.decodeString(mVocabularyList.get(position).getWord()));
-        tViewHolder.mTvMeaning.setText(SecurityUtils.decodeString(mVocabularyList.get(position).getMeanVietnamese()));
+        tViewHolder.mTvMeaning.setText(SecurityUtils.decodeString(mVocabularyList.get(position).getShortMeanVietnamese()));
         Picasso.with(mContext).load(R.drawable.contract).into(tViewHolder.mIvImage);
 
 

@@ -93,7 +93,6 @@ public class VocabularyDetailsFragment extends Fragment implements ListView.OnIt
      */
     @Override
     public void onRememberedCheckChangeListener(boolean isChecked, int position) {
-        //TODO update in SQLite
         Log.i("Is checked", "Checked = " + isChecked);
         mVocabularyList.get(position).setRemember(isChecked);
         //save to database
@@ -111,12 +110,13 @@ public class VocabularyDetailsFragment extends Fragment implements ListView.OnIt
     }
 
     @Override
-    public void onClick(CustomLayoutDialog sweetAlertDialog, boolean isConfirmed) {
+    public void onClick(CustomLayoutDialog sweetAlertDialog, boolean isRemember) {
         sweetAlertDialog.dismissWithAnimation();
 
-//        mVocabularyList.get(mCurrentItemPosition).setRemember(isRememberPopupChecked);
-//        mAdapter.notifyDataSetInvalidated();
-//        mCurrentItemPosition = -1;
+        mVocabularyList.get(mCurrentItemPosition).setRemember(isRemember);
+        mVocabularyList.get(mCurrentItemPosition).save();
+        mAdapter.notifyDataSetInvalidated();
+        mCurrentItemPosition = -1;
     }
 
     @Override

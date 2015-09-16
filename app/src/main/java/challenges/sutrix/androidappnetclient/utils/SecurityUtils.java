@@ -23,6 +23,7 @@ import Decoder.BASE64Encoder;
  */
 public class SecurityUtils {
 
+//    private static String mSecretKey = "yourSecretKey";
     private static String mSecretKey = "yourSecretKey";
 
     public static String encodeString(String plainText){

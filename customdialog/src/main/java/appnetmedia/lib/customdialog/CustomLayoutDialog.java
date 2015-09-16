@@ -33,12 +33,12 @@ public class CustomLayoutDialog extends Dialog implements View.OnClickListener {
     private Button mConfirmButton;
     private Button mCancelButton;
     private OnSweetClickListener mCancelClickListener;
-    private OnSweetClickListener mConfirmClickListener;
+    protected OnSweetClickListener mConfirmClickListener;
     private boolean mCloseFromCancel;
     private View mCustomLayoutView;
 
     public interface OnSweetClickListener {
-        void onClick(CustomLayoutDialog sweetAlertDialog, boolean isConfirmed);
+        void onClick(CustomLayoutDialog sweetAlertDialog, boolean isRemember);
     }
 
 
@@ -221,11 +221,7 @@ public class CustomLayoutDialog extends Dialog implements View.OnClickListener {
                 dismissWithAnimation();
             }
         } else if (v.getId() == R.id.confirm_button) {
-            if (mConfirmClickListener != null) {
-                mConfirmClickListener.onClick(CustomLayoutDialog.this, true);
-            } else {
-                dismissWithAnimation();
-            }
+            //need override it in the inherit class
         }
     }
 }

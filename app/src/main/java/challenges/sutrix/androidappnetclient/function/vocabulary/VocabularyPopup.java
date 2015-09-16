@@ -10,6 +10,7 @@ import android.speech.SpeechRecognizer;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +25,7 @@ import challenges.sutrix.androidappnetclient.activity.MainActivity;
 import challenges.sutrix.androidappnetclient.function.vocabulary.listener.NextPreviousWordListener;
 import challenges.sutrix.androidappnetclient.function.vocabulary.model.VocabularyModel;
 import challenges.sutrix.androidappnetclient.utils.ConnectionUtils;
+import challenges.sutrix.androidappnetclient.utils.SecurityUtils;
 
 /**
  * Created by root on 10/09/2015.
@@ -78,8 +80,13 @@ public class VocabularyPopup extends CustomLayoutDialog implements RecognitionLi
         if (mLayoutView == null) {
             mLayoutView = mContext.getLayoutInflater().inflate(R.layout.vocabulary_details_popup_layout, null);
 
-
             mCbPopupIsRemember = (CheckBox) mLayoutView.findViewById(R.id.cb_vocabulary_popup_remember);
+            mCbPopupIsRemember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                }
+            });
             mIvPopupImage = (ImageView) mLayoutView.findViewById(R.id.iv_vocabulary_details_image_popup);
             mTvPopupVNMeaning = (TextView) mLayoutView.findViewById(R.id.tv_vocabulary_details_vi_meaning_popup);
             mTvPopupSpelling = (TextView) mLayoutView.findViewById(R.id.tv_vocabulary_details_spelling_popup);
@@ -110,7 +117,7 @@ public class VocabularyPopup extends CustomLayoutDialog implements RecognitionLi
             mIvPopupSpeak.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ((MainActivity) mContext).speak(mVocabularyModel.getWord());
+                    ((MainActivity) mContext).speak(SecurityUtils.decodeString(mVocabularyModel.getWord()));
                 }
             });
 
@@ -163,9 +170,9 @@ public class VocabularyPopup extends CustomLayoutDialog implements RecognitionLi
         if (mVocabularyModel != null) {
             mCbPopupIsRemember.setChecked(mVocabularyModel.isRemember());
 
-            mTvPopupName.setText(mVocabularyModel.getWord());
-            mTvPopupSpelling.setText(mVocabularyModel.getMeanVietnamese()); //TODO spelling text
-            mTvPopupVNMeaning.setText(mVocabularyModel.getMeanVietnamese());
+            mTvPopupName.setText(SecurityUtils.decodeString(mVocabularyModel.getWord()));
+            mTvPopupSpelling.setText(SecurityUtils.decodeString(mVocabularyModel.getPhonetic()));
+            mTvPopupVNMeaning.setText(SecurityUtils.decodeString(mVocabularyModel.getMeanVietnamese()));
         }
 
     }
@@ -182,6 +189,13 @@ public class VocabularyPopup extends CustomLayoutDialog implements RecognitionLi
             mAnotherWordListener.onNextWordClick();
         }else if(v.equals(mIvPreviousWord)){
             mAnotherWordListener.onPreviousWordClick();
+        }else if(v.getId() == appnetmedia.lib.customdialog.R.id.confirm_button){
+            if (mConfirmClickListener != null) {
+                mConfirmClickListener.onClick(this, mCbPopupIsRemember.isChecked());
+            } else {
+                dismissWithAnimation();
+            }
+
         }
         super.onClick(v);
     }
