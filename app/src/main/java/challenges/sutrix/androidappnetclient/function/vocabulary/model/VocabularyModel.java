@@ -160,4 +160,11 @@ public class VocabularyModel extends Model{
                 .orderBy("word ASC")
                 .execute();
     }
+    public static List<VocabularyModel> getAll() {
+        // This is how you execute a query
+        return new Select()
+                .from(VocabularyModel.class)
+                .orderBy("word ASC")
+                .execute();
+    }
 }

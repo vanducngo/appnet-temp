@@ -18,6 +18,7 @@ import java.util.List;
 import challenges.sutrix.androidappnetclient.R;
 import challenges.sutrix.androidappnetclient.function.vocabulary.listener.RememberedCheckChangeListener;
 import challenges.sutrix.androidappnetclient.function.vocabulary.model.VocabularyModel;
+import challenges.sutrix.androidappnetclient.utils.SecurityUtils;
 
 /**
  * Created by root on 31/08/2015.
@@ -72,8 +73,8 @@ public class VocabularyDetailsAdapter extends BaseAdapter {
             tViewHolder = (ViewHolder) sView.getTag();
         }
 
-        tViewHolder.mTvName.setText(mVocabularyList.get(position).getWord());
-        tViewHolder.mTvMeaning.setText(mVocabularyList.get(position).getMeanVietnamese());
+        tViewHolder.mTvName.setText(SecurityUtils.decodeString(mVocabularyList.get(position).getWord()));
+        tViewHolder.mTvMeaning.setText(SecurityUtils.decodeString(mVocabularyList.get(position).getMeanVietnamese()));
         Picasso.with(mContext).load(R.drawable.contract).into(tViewHolder.mIvImage);
 
 

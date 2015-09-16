@@ -1,6 +1,7 @@
 package challenges.sutrix.androidappnetclient.activity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -12,12 +13,18 @@ import com.facebook.login.LoginManager;
 
 import org.json.JSONObject;
 
+import java.util.List;
+
 import challenges.sutrix.androidappnetclient.R;
 import challenges.sutrix.androidappnetclient.function.overview.OverviewFragment;
+import challenges.sutrix.androidappnetclient.function.vocabulary.model.VocabularyCategoryModel;
+import challenges.sutrix.androidappnetclient.function.vocabulary.model.VocabularyModel;
 import challenges.sutrix.androidappnetclient.utils.PreferenceUtils;
+import challenges.sutrix.androidappnetclient.utils.SecurityUtils;
 
 
 public class MainActivity extends BaseActivity implements GraphRequest.GraphJSONObjectCallback{
+    private final String TAG = "MainActivity";
 
 
 //    private ProfileTracker mProfileTracker;
@@ -31,22 +38,8 @@ public class MainActivity extends BaseActivity implements GraphRequest.GraphJSON
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        DataBaseHelper db =new DataBaseHelper(this);
-//        try {
-//            db.CopyDataBaseFromAsset();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        db.openDataBase();
-//        db.close();
-
-//        try {
-//            db.CopyDataBaseFromAsset();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-        // Retrieve and cache the system's default "short" animation time.
-//        mShortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
+        //Call encrypt data - develop mode only
+//        encryptData();
 
         FacebookSdk.sdkInitialize(getApplicationContext());
         LogoutFB();
@@ -85,6 +78,34 @@ public class MainActivity extends BaseActivity implements GraphRequest.GraphJSON
 //        } else {
 //            super.addFragment(new MainFragment());
 //        }
+    }
+
+    private void encryptData() {
+
+        //Category
+        List<VocabularyCategoryModel> listPlainCategory = VocabularyCategoryModel.getAll();
+        for(VocabularyCategoryModel item : listPlainCategory){
+            item.setName(SecurityUtils.encodeString(item.getName()));
+            item.setMeaning(SecurityUtils.encodeString(item.getMeaning()));
+            item.setDescription(SecurityUtils.encodeString(item.getDescription()));
+            item.save();
+        }
+
+        //Vocabulary
+        List<VocabularyModel> listPlainVocabulary = VocabularyModel.getAll();
+        for(VocabularyModel item : listPlainVocabulary){
+            item.setWord(SecurityUtils.encodeString(item.getWord()));
+            item.setPhonetic(SecurityUtils.encodeString(item.getPhonetic()));
+            item.setShortMeanVietnamese(SecurityUtils.encodeString(item.getShortMeanVietnamese()));
+            item.setMeanVietnamese(SecurityUtils.encodeString(item.getMeanVietnamese()));
+            item.setSynonyms(SecurityUtils.encodeString(item.getSynonyms()));
+            item.setExample(SecurityUtils.encodeString(item.getExample()));
+            item.setExampleMeaning(SecurityUtils.encodeString(item.getExampleMeaning()));
+            item.setParagraph(SecurityUtils.encodeString(item.getParagraph()));
+            item.save();
+        }
+        Log.i(TAG,"encrypt done");
+
     }
 
     @Override

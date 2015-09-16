@@ -13,6 +13,7 @@ import java.util.List;
 
 import challenges.sutrix.androidappnetclient.R;
 import challenges.sutrix.androidappnetclient.function.vocabulary.model.VocabularyCategoryModel;
+import challenges.sutrix.androidappnetclient.utils.SecurityUtils;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -63,8 +64,8 @@ public class VocabularyCategoryAdapter extends BaseAdapter {
             tViewHolder = (ViewHolder) sView.getTag();
         }
 
-        tViewHolder.mTvName.setText(mVocabularyCategoryList.get(i).getName());
-        tViewHolder.mTvMeaning.setText(mVocabularyCategoryList.get(i).getMeaning());
+        tViewHolder.mTvName.setText(SecurityUtils.decodeString(mVocabularyCategoryList.get(i).getName()));
+        tViewHolder.mTvMeaning.setText(SecurityUtils.decodeString(mVocabularyCategoryList.get(i).getMeaning()));
 //        tViewHolder.mIvImage.setImageResource(R.drawable.contract);
         Picasso.with(mContext).load(R.drawable.contract).into(tViewHolder.mIvImage);
 
