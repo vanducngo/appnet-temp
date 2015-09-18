@@ -22,11 +22,9 @@
 
 
     <!--Text to speech-->
-    <string name="error_text_to_speech_string">Sorry, but text speed is not support in your device</string>
+    <string name="error_text_to_speech_string">Thiết bị của bạn không hỗ trợ phát âm từ vựng</string>
     <!-- Speech to text -->
     <string name="speech_prompt">Say something&#8230;</string>
-    <string name="speech_not_supported">Sorry! Your device doesn\'t support speech input</string>
-    <string name="tap_on_mic">Tap on mic to speak</string>
 
     <!-- fucntion -->
     <string name="listening_photos_string">Photos</string>
@@ -54,8 +52,9 @@
 
     <!-- Vocabulary -->
     <string name="is_remembered_string">Đã nhớ</string>
-    <string name="vocabulary_reach_end_string">Khong con tu dang sau</string>
-    <string name="vocabulary_reach_begining_string">Khong con tu dang truoc</string>
+    <string name="vocabulary_reach_end_string">Không còn từ đằng sau</string>
+    <string name="vocabulary_reach_begining_string">Không còn từ đằng trước</string>
+    <string name="vocabulary_example_string">Ví dụ:</string>
 
     <string-array name="vocabulary_type">
         <item>Contract</item>

@@ -71,7 +71,7 @@ public class VocabularyCategoryModel extends Model{
         // This is how you execute a query
         return new Select()
                 .from(VocabularyCategoryModel.class)
-                .orderBy("name ASC")
+                .orderBy("id ASC")
                 .execute();
     }
 

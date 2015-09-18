@@ -1,6 +1,7 @@
 package challenges.sutrix.androidappnetclient.activity;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.v4.app.Fragment;
@@ -29,10 +30,12 @@ import challenges.sutrix.androidappnetclient.function.overview.OverviewFragment;
 import challenges.sutrix.androidappnetclient.function.reading.ReadingFragment;
 import challenges.sutrix.androidappnetclient.function.vocabulary.VocabularyCategoryFragment;
 import challenges.sutrix.androidappnetclient.listener.RecyclerItemClickListener;
+import challenges.sutrix.androidappnetclient.utils.GeneralUtils;
 import challenges.sutrix.androidappnetclient.utils.KeyboardUtils;
 
 public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnInitListener{
     private Toast mToast;
+    private static final String TAG = "BaseActivity";
 
     private TextToSpeech mNotificationVoice;
 
@@ -46,20 +49,19 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
     private DrawerLayout Drawer;    // Declaring DrawerLayout
     private ActionBarDrawerToggle mDrawerToggle;
 
-    private boolean isDebugMode = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mToast = new Toast(this);
-        mNotificationVoice = new TextToSpeech(this, this);
+        mToast = new Toast(MyApplication.getContext());
+
         titles = getResources().getStringArray(R.array.menu_array_string);
     }
-
     /**
      * Init navigation drawer
      */
-    protected void initNavigationDrawer() {
+    protected void initNavigationDrawer(){
 
         Toolbar mToolBar = (Toolbar) findViewById(R.id.card_tool_bar);
         setSupportActionBar(mToolBar);
@@ -162,7 +164,7 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
      */
     protected void showToast(String message) {
         mToast.cancel();
-        mToast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
+        mToast = Toast.makeText(MyApplication.getContext(), message, Toast.LENGTH_SHORT);
         mToast.show();
     }
 
@@ -171,9 +173,9 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
      *
      * @param stringID String id to show
      */
-    protected void showToast(int stringID) {
+    public void showToast(int stringID) {
         mToast.cancel();
-        mToast = Toast.makeText(this, stringID, Toast.LENGTH_SHORT);
+        mToast = Toast.makeText(MyApplication.getContext(), stringID, Toast.LENGTH_SHORT);
         mToast.show();
     }
 
@@ -290,15 +292,64 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
         }
     }
 
-
+    /**
+     * Speak the giving text
+     * @param text
+     */
     public void speak(String text) {
-        if(!isDebugMode) {
             if (mNotificationVoice != null) {
                 mNotificationVoice.stop();
                 mNotificationVoice.speak(text, TextToSpeech.QUEUE_FLUSH, null);
             } else {
                 showToast(R.string.error_text_to_speech_string);
             }
+    }
+
+    @Override
+    protected void onStart() {
+        new InitTextToSpeech().execute();
+        GeneralUtils.showLog(TAG, "onStart");
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        if(mNotificationVoice != null) {
+            mNotificationVoice.shutdown();
+        }
+        GeneralUtils.showLog(TAG, "onStop");
+        super.onStop();
+    }
+
+    /**
+     * Init TextToSpeech.
+     * We need to put it in the background task because it a time-consuming task
+     * and will block UI if it is executed in UI thread.
+     *
+     */
+    private class InitTextToSpeech extends AsyncTask<Void,Void, TextToSpeech> implements TextToSpeech.OnInitListener{
+        TextToSpeech notification;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected TextToSpeech doInBackground(Void... voids) {
+            notification = new TextToSpeech(BaseActivity.this, InitTextToSpeech.this);
+            GeneralUtils.showLog(TAG, "doInBackground");
+            return notification;
+        }
+
+        @Override
+        protected void onPostExecute(TextToSpeech textToSpeech) {
+            super.onPostExecute(textToSpeech);
+            mNotificationVoice = notification;
+        }
+
+        @Override
+        public void onInit(int i) {
+            onPostExecute(notification);
         }
     }
 }

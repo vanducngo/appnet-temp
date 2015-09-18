@@ -1,7 +1,6 @@
 package challenges.sutrix.androidappnetclient.activity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -19,6 +18,8 @@ import challenges.sutrix.androidappnetclient.R;
 import challenges.sutrix.androidappnetclient.function.overview.OverviewFragment;
 import challenges.sutrix.androidappnetclient.function.vocabulary.model.VocabularyCategoryModel;
 import challenges.sutrix.androidappnetclient.function.vocabulary.model.VocabularyModel;
+import challenges.sutrix.androidappnetclient.utils.ApplicationMode;
+import challenges.sutrix.androidappnetclient.utils.GeneralUtils;
 import challenges.sutrix.androidappnetclient.utils.PreferenceUtils;
 import challenges.sutrix.androidappnetclient.utils.SecurityUtils;
 
@@ -38,8 +39,11 @@ public class MainActivity extends BaseActivity implements GraphRequest.GraphJSON
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Call encrypt data - develop mode only
-//        encryptData();
+        //Call encrypt data - ENCRYPT_MODE only
+        if(((MyApplication)getApplication()).getApplicationMode() == ApplicationMode.ENCRYPTION_MODE) {
+            GeneralUtils.showLog(TAG, "encryptData");
+            encryptData();
+        }
 
         FacebookSdk.sdkInitialize(getApplicationContext());
         LogoutFB();
@@ -80,6 +84,10 @@ public class MainActivity extends BaseActivity implements GraphRequest.GraphJSON
 //        }
     }
 
+    /**
+     * Encrypt data and save it in SQLite
+     * This function is executed in Develop mode only
+     */
     private void encryptData() {
 
         //Category
@@ -104,7 +112,7 @@ public class MainActivity extends BaseActivity implements GraphRequest.GraphJSON
             item.setParagraph(SecurityUtils.encodeString(item.getParagraph()));
             item.save();
         }
-        Log.i(TAG,"encrypt done");
+        GeneralUtils.showLog(TAG, "encrypt done");
 
     }
 
@@ -168,5 +176,4 @@ public class MainActivity extends BaseActivity implements GraphRequest.GraphJSON
         PreferenceUtils.remove(getApplicationContext(), PreferenceUtils.PREF_LOGIN_EMAIL);
         PreferenceUtils.remove(getApplicationContext(), PreferenceUtils.PREF_USER_IMAGE);
     }
-
 }

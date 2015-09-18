@@ -157,14 +157,14 @@ public class VocabularyModel extends Model{
         return new Select()
                 .from(VocabularyModel.class)
                 .where("category_id = ?",id)
-                .orderBy("word ASC")
+                .orderBy("id ASC")
                 .execute();
     }
     public static List<VocabularyModel> getAll() {
         // This is how you execute a query
         return new Select()
                 .from(VocabularyModel.class)
-                .orderBy("word ASC")
+                .orderBy("id ASC")
                 .execute();
     }
 }

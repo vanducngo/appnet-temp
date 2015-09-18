@@ -3,22 +3,22 @@ package challenges.sutrix.androidappnetclient.function.vocabulary;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.List;
 
 import appnetmedia.lib.customdialog.CustomLayoutDialog;
 import challenges.sutrix.androidappnetclient.R;
+import challenges.sutrix.androidappnetclient.activity.MainActivity;
 import challenges.sutrix.androidappnetclient.function.vocabulary.adapter.VocabularyDetailsAdapter;
 import challenges.sutrix.androidappnetclient.function.vocabulary.listener.NextPreviousWordListener;
 import challenges.sutrix.androidappnetclient.function.vocabulary.listener.RememberedCheckChangeListener;
 import challenges.sutrix.androidappnetclient.function.vocabulary.model.VocabularyModel;
+import challenges.sutrix.androidappnetclient.utils.GeneralUtils;
 
 /**
  * Created by root on 27/05/2015.
@@ -33,6 +33,7 @@ public class VocabularyDetailsFragment extends Fragment implements ListView.OnIt
 
     private int mCurrentItemPosition = -1;
     private CustomLayoutDialog mVocabularyPopup;
+    private final String TAG = "VocabularyDetailsFragment";
 
 
     @Override
@@ -93,7 +94,7 @@ public class VocabularyDetailsFragment extends Fragment implements ListView.OnIt
      */
     @Override
     public void onRememberedCheckChangeListener(boolean isChecked, int position) {
-        Log.i("Is checked", "Checked = " + isChecked);
+        GeneralUtils.showLog(TAG, "Is checked  = " + isChecked);
         mVocabularyList.get(position).setRemember(isChecked);
         //save to database
         mVocabularyList.get(position).save();
@@ -122,7 +123,9 @@ public class VocabularyDetailsFragment extends Fragment implements ListView.OnIt
     @Override
     public void onNextWordClick() {
         if(mCurrentItemPosition == mVocabularyList.size()-1) {
-            Toast.makeText(getActivity(), getString(R.string.vocabulary_reach_end_string), Toast.LENGTH_SHORT).show();
+            if(getActivity() instanceof MainActivity) {
+                ((MainActivity) getActivity()).showToast(R.string.vocabulary_reach_end_string);
+            }
         }else{
             mCurrentItemPosition++;
             if(mVocabularyPopup !=null){
@@ -134,7 +137,10 @@ public class VocabularyDetailsFragment extends Fragment implements ListView.OnIt
     @Override
     public void onPreviousWordClick() {
         if(mCurrentItemPosition == 0) {
-            Toast.makeText(getActivity(), getString(R.string.vocabulary_reach_begining_string), Toast.LENGTH_SHORT).show();
+
+            if(getActivity() instanceof MainActivity) {
+                ((MainActivity) getActivity()).showToast(R.string.vocabulary_reach_begining_string);
+            }
         }else{
             mCurrentItemPosition--;
             if(mVocabularyPopup !=null){

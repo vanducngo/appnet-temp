@@ -1,7 +1,6 @@
 package challenges.sutrix.androidappnetclient.function.vocabulary.adapter;
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +17,14 @@ import java.util.List;
 import challenges.sutrix.androidappnetclient.R;
 import challenges.sutrix.androidappnetclient.function.vocabulary.listener.RememberedCheckChangeListener;
 import challenges.sutrix.androidappnetclient.function.vocabulary.model.VocabularyModel;
+import challenges.sutrix.androidappnetclient.utils.GeneralUtils;
 import challenges.sutrix.androidappnetclient.utils.SecurityUtils;
 
 /**
  * Created by root on 31/08/2015.
  */
 public class VocabularyDetailsAdapter extends BaseAdapter {
+    private final String TAG = "VocabularyDetailsAdapter";
     private Activity mContext;
     private List<VocabularyModel> mVocabularyList;
     private RememberedCheckChangeListener mListener;
@@ -82,10 +83,10 @@ public class VocabularyDetailsAdapter extends BaseAdapter {
 
         if (mVocabularyList.get(position).isRemember()) {
             tViewHolder.mCbRemember.setChecked(true);
-            Log.i("Is remember", "true");
+            GeneralUtils.showLog(TAG, "Is remember true");
         } else {
             tViewHolder.mCbRemember.setChecked(false);
-            Log.i("Is remember", "false");
+            GeneralUtils.showLog(TAG, "Is remember false");
         }
 
         tViewHolder.mCbRemember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

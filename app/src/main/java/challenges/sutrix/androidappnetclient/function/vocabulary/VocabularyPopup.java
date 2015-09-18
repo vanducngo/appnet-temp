@@ -7,8 +7,8 @@ import android.os.CountDownTimer;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
-import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -25,6 +25,7 @@ import challenges.sutrix.androidappnetclient.activity.MainActivity;
 import challenges.sutrix.androidappnetclient.function.vocabulary.listener.NextPreviousWordListener;
 import challenges.sutrix.androidappnetclient.function.vocabulary.model.VocabularyModel;
 import challenges.sutrix.androidappnetclient.utils.ConnectionUtils;
+import challenges.sutrix.androidappnetclient.utils.GeneralUtils;
 import challenges.sutrix.androidappnetclient.utils.SecurityUtils;
 
 /**
@@ -39,6 +40,9 @@ public class VocabularyPopup extends CustomLayoutDialog implements RecognitionLi
     private TextView mTvPopupName;
     private TextView mTvPopupSpelling;
     private TextView mTvPopupVNMeaning;
+    private TextView mTvPopupExample;
+    private TextView mTvPopupExampleMean;
+    private WebView mWvPopupParagraph;
     private ImageView mIvPopupSpeak;
     private ImageView mIvPreviousWord;
     private ImageView mIvNextWord;
@@ -49,6 +53,7 @@ public class VocabularyPopup extends CustomLayoutDialog implements RecognitionLi
     private SpeechRecognizer mSpeedRecognizer = null;
     private SweetAlertDialog pDialog;
     private boolean isRecordSuccess = false;
+    private String TAG = "VocabularyPopup";
 
     public VocabularyPopup(Activity context, VocabularyModel sVocabularyModel,NextPreviousWordListener sAnotherWordListener ) {
         super(context);
@@ -91,6 +96,10 @@ public class VocabularyPopup extends CustomLayoutDialog implements RecognitionLi
             mTvPopupVNMeaning = (TextView) mLayoutView.findViewById(R.id.tv_vocabulary_details_vi_meaning_popup);
             mTvPopupSpelling = (TextView) mLayoutView.findViewById(R.id.tv_vocabulary_details_spelling_popup);
             mTvPopupName = (TextView) mLayoutView.findViewById(R.id.tv_vocabulary_details_name_popup);
+            mTvPopupExample = (TextView)mLayoutView.findViewById(R.id.tv_vocabulary_details_vi_example_popup);
+            mTvPopupExampleMean = (TextView)mLayoutView.findViewById(R.id.tv_vocabulary_details_vi_example_mean_popup);
+            mWvPopupParagraph = (WebView)mLayoutView.findViewById(R.id.wv_vocabulary_details_vi_paragraph_popup);
+
             mIvPopupSpeak = (ImageView) mLayoutView.findViewById(R.id.iv_vocabulary_details_speak_popup);
 
             mIvPreviousWord = (ImageView) mLayoutView.findViewById(R.id.iv_vocabulary_details_previous_popup);
@@ -155,7 +164,7 @@ public class VocabularyPopup extends CustomLayoutDialog implements RecognitionLi
             }
 
             public void onFinish() {
-                Log.i("Onfinish", "onFinish()");
+                GeneralUtils.showLog(TAG, "onFinish()");
                 mIvRecordSpeech.setEnabled(true);
                 i = -1;
                 mSpeedRecognizer.stopListening();
@@ -173,6 +182,10 @@ public class VocabularyPopup extends CustomLayoutDialog implements RecognitionLi
             mTvPopupName.setText(SecurityUtils.decodeString(mVocabularyModel.getWord()));
             mTvPopupSpelling.setText(SecurityUtils.decodeString(mVocabularyModel.getPhonetic()));
             mTvPopupVNMeaning.setText(SecurityUtils.decodeString(mVocabularyModel.getMeanVietnamese()));
+            mTvPopupExample.setText(SecurityUtils.decodeString(mVocabularyModel.getExample()));
+            mTvPopupExampleMean.setText(SecurityUtils.decodeString(mVocabularyModel.getExampleMeaning()));
+
+            mWvPopupParagraph.loadDataWithBaseURL(null, SecurityUtils.decodeString(mVocabularyModel.getParagraph()), "text/html", "utf-8", null);
         }
 
     }
@@ -180,6 +193,8 @@ public class VocabularyPopup extends CustomLayoutDialog implements RecognitionLi
     public void setVocabularyModel(VocabularyModel sVocabularyModel){
         mVocabularyModel = sVocabularyModel;
         initData();
+        GeneralUtils.showLog(TAG, "Webview: " + mWvPopupParagraph.getHeight());
+        GeneralUtils.showLog(TAG, "ParentLayout: " + mLayoutView.getHeight());
     }
 
 
@@ -232,7 +247,7 @@ public class VocabularyPopup extends CustomLayoutDialog implements RecognitionLi
 
     @Override
     public void onError(int error) {
-        Log.i("onError", String.valueOf(error) + " - " +String.valueOf(isRecordSuccess));
+        GeneralUtils.showLog(TAG, "onError " + String.valueOf(error) + " - " + String.valueOf(isRecordSuccess));
         // Sometime onError will get called after onResults so we keep a boolean to ignore error also
         if(isRecordSuccess){
             return;
@@ -248,16 +263,16 @@ public class VocabularyPopup extends CustomLayoutDialog implements RecognitionLi
     @Override
     public void onResults(Bundle results) {
         isRecordSuccess = true;
-
+        String tVocabulary =SecurityUtils.decodeString(mVocabularyModel.getWord());
         ArrayList<String> matches = results
                 .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
         String tStrResult = matches.get(0);
-        if (mVocabularyModel.getWord().toLowerCase().equals(tStrResult.toLowerCase())){
+        if ((tVocabulary.toLowerCase().trim()).equals(tStrResult.toLowerCase().trim())){
             pDialog.setTitleText("Success!")
                     .setConfirmText("OK")
                     .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
         }else{
-            pDialog.setTitleText("Not match!\nYou speak: " + tStrResult + "\nThe word: " + mVocabularyModel.getWord())
+            pDialog.setTitleText("Not match!\nYou speak: " + tStrResult + "\nThe word: " + tVocabulary)
                     .setConfirmText("OK")
                     .changeAlertType(SweetAlertDialog.ERROR_TYPE);
         }
