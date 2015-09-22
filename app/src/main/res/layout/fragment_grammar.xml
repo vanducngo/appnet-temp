@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
 
     <TextView
-        android:id="@+id/tv_grammar_title"
+        android:id="@+id/tv_grammar_main_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:text="RockAndRoll Fragment" />
+        android:layout_centerHorizontal="true"
+        android:text="Grammar"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+    <ListView
+        android:id="@+id/lv_grammar_main_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tv_grammar_main_description"
+        android:layout_margin="3dp"
+        android:background="@android:color/white"
+        android:divider="#FFFFFF"
+        android:dividerHeight="5dp"></ListView>
 </RelativeLayout>

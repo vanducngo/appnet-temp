@@ -24,7 +24,7 @@ import Decoder.BASE64Encoder;
 public class SecurityUtils {
 
 //    private static String mSecretKey = "yourSecretKey";
-    private static String mSecretKey = "yourSecretKey";
+    private static String mSecretKey = "vanbau@190";
 
     public static String encodeString(String plainText){
         String rEncryptedString = "";

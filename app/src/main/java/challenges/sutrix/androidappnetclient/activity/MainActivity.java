@@ -125,6 +125,7 @@ public class MainActivity extends BaseActivity implements GraphRequest.GraphJSON
     protected void onStop() {
 //        accessTokenTracker.stopTracking();
 //        mProfileTracker.stopTracking();
+        super.cancelToast();
         super.onStop();
     }
 

@@ -17,7 +17,7 @@ import java.util.Arrays;
 import challenges.sutrix.androidappnetclient.listener.GetPostSuccessInterface;
 import challenges.sutrix.androidappnetclient.model.PostModel;
 import challenges.sutrix.androidappnetclient.utils.ConnectionUtils;
-import challenges.sutrix.androidappnetclient.utils.Constants;
+import challenges.sutrix.androidappnetclient.utils.StringConstants;
 
 /**
  * Created by root on 19/05/2015.
@@ -44,7 +44,7 @@ public class APIGetRecentPost extends AsyncTask<String, Void, String> {
         String rJsonString = null;
         try {
             //Request get recent post
-            rJsonString = ConnectionUtils.executeHttpGet(Constants.RECENT_POST_API);
+            rJsonString = ConnectionUtils.executeHttpGet(StringConstants.RECENT_POST_API);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -59,7 +59,7 @@ public class APIGetRecentPost extends AsyncTask<String, Void, String> {
             try {
                 tJsonObject = new JSONObject(result);
                 // Parse the first list of the json
-                String tJsonList = tJsonObject.getString(Constants.DATA);
+                String tJsonList = tJsonObject.getString(StringConstants.DATA);
 
                 Gson gson = new Gson();
                 PostModel[] tSuggestion1Array = gson.fromJson(
@@ -73,7 +73,7 @@ public class APIGetRecentPost extends AsyncTask<String, Void, String> {
                 e.printStackTrace();
             }
         }else{
-            Toast.makeText(mContext,Constants.REQUEST_FALSE,Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, StringConstants.REQUEST_FALSE,Toast.LENGTH_SHORT).show();
         }
     }
 }

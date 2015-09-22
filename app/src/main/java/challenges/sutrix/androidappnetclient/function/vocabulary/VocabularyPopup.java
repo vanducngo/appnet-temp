@@ -27,11 +27,12 @@ import challenges.sutrix.androidappnetclient.function.vocabulary.model.Vocabular
 import challenges.sutrix.androidappnetclient.utils.ConnectionUtils;
 import challenges.sutrix.androidappnetclient.utils.GeneralUtils;
 import challenges.sutrix.androidappnetclient.utils.SecurityUtils;
+import challenges.sutrix.androidappnetclient.utils.StringConstants;
 
 /**
  * Created by root on 10/09/2015.
  */
-public class VocabularyPopup extends CustomLayoutDialog implements RecognitionListener{
+public class VocabularyPopup extends CustomLayoutDialog implements RecognitionListener {
 
     private Activity mContext;
     private VocabularyModel mVocabularyModel;
@@ -55,7 +56,7 @@ public class VocabularyPopup extends CustomLayoutDialog implements RecognitionLi
     private boolean isRecordSuccess = false;
     private String TAG = "VocabularyPopup";
 
-    public VocabularyPopup(Activity context, VocabularyModel sVocabularyModel,NextPreviousWordListener sAnotherWordListener ) {
+    public VocabularyPopup(Activity context, VocabularyModel sVocabularyModel, NextPreviousWordListener sAnotherWordListener) {
         super(context);
         this.mContext = context;
         this.mVocabularyModel = sVocabularyModel;
@@ -76,11 +77,12 @@ public class VocabularyPopup extends CustomLayoutDialog implements RecognitionLi
         mSpeechRecognitionIntent.putExtra(RecognizerIntent.EXTRA_PROMPT,
                 mContext.getString(R.string.speech_prompt));
 
-        mSpeedRecognizer  = SpeechRecognizer.createSpeechRecognizer(mContext);
+        mSpeedRecognizer = SpeechRecognizer.createSpeechRecognizer(mContext);
         mSpeedRecognizer.setRecognitionListener(this);
     }
 
     private int i = -1;
+
     private void initViews() {
         if (mLayoutView == null) {
             mLayoutView = mContext.getLayoutInflater().inflate(R.layout.vocabulary_details_popup_layout, null);
@@ -96,9 +98,9 @@ public class VocabularyPopup extends CustomLayoutDialog implements RecognitionLi
             mTvPopupVNMeaning = (TextView) mLayoutView.findViewById(R.id.tv_vocabulary_details_vi_meaning_popup);
             mTvPopupSpelling = (TextView) mLayoutView.findViewById(R.id.tv_vocabulary_details_spelling_popup);
             mTvPopupName = (TextView) mLayoutView.findViewById(R.id.tv_vocabulary_details_name_popup);
-            mTvPopupExample = (TextView)mLayoutView.findViewById(R.id.tv_vocabulary_details_vi_example_popup);
-            mTvPopupExampleMean = (TextView)mLayoutView.findViewById(R.id.tv_vocabulary_details_vi_example_mean_popup);
-            mWvPopupParagraph = (WebView)mLayoutView.findViewById(R.id.wv_vocabulary_details_vi_paragraph_popup);
+            mTvPopupExample = (TextView) mLayoutView.findViewById(R.id.tv_vocabulary_details_vi_example_popup);
+            mTvPopupExampleMean = (TextView) mLayoutView.findViewById(R.id.tv_vocabulary_details_vi_example_mean_popup);
+            mWvPopupParagraph = (WebView) mLayoutView.findViewById(R.id.wv_vocabulary_details_vi_paragraph_popup);
 
             mIvPopupSpeak = (ImageView) mLayoutView.findViewById(R.id.iv_vocabulary_details_speak_popup);
 
@@ -108,17 +110,17 @@ public class VocabularyPopup extends CustomLayoutDialog implements RecognitionLi
             mIvPreviousWord.setOnClickListener(this);
             mIvNextWord.setOnClickListener(this);
 
-            mIvRecordSpeech = (ImageView)mLayoutView.findViewById(R.id.iv_vocabulary_details_record_popup);
+            mIvRecordSpeech = (ImageView) mLayoutView.findViewById(R.id.iv_vocabulary_details_record_popup);
 
 
             mIvRecordSpeech.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(ConnectionUtils.isInternetAvailable(mContext)){
+                    if (ConnectionUtils.isInternetAvailable(mContext)) {
                         mIvRecordSpeech.setEnabled(false);
                         showRecordingDialog();
-                    }else{
-                        Toast.makeText(mContext,"No internet",Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(mContext, "No internet", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -135,10 +137,10 @@ public class VocabularyPopup extends CustomLayoutDialog implements RecognitionLi
         }
     }
 
-    private void showRecordingDialog(){
+    private void showRecordingDialog() {
 //        if(pDialog == null) {
-            pDialog = new SweetAlertDialog(mContext, SweetAlertDialog.PROGRESS_TYPE)
-                    .setTitleText("Loading");
+        pDialog = new SweetAlertDialog(mContext, SweetAlertDialog.PROGRESS_TYPE)
+                .setTitleText("Loading");
 //        }
         pDialog.show();
         pDialog.setCancelable(false);
@@ -190,7 +192,7 @@ public class VocabularyPopup extends CustomLayoutDialog implements RecognitionLi
 
     }
 
-    public void setVocabularyModel(VocabularyModel sVocabularyModel){
+    public void setVocabularyModel(VocabularyModel sVocabularyModel) {
         mVocabularyModel = sVocabularyModel;
         initData();
         GeneralUtils.showLog(TAG, "Webview: " + mWvPopupParagraph.getHeight());
@@ -200,11 +202,11 @@ public class VocabularyPopup extends CustomLayoutDialog implements RecognitionLi
 
     @Override
     public void onClick(View v) {
-        if(v.equals(mIvNextWord)){
+        if (v.equals(mIvNextWord)) {
             mAnotherWordListener.onNextWordClick();
-        }else if(v.equals(mIvPreviousWord)){
+        } else if (v.equals(mIvPreviousWord)) {
             mAnotherWordListener.onPreviousWordClick();
-        }else if(v.getId() == appnetmedia.lib.customdialog.R.id.confirm_button){
+        } else if (v.getId() == appnetmedia.lib.customdialog.R.id.confirm_button) {
             if (mConfirmClickListener != null) {
                 mConfirmClickListener.onClick(this, mCbPopupIsRemember.isChecked());
             } else {
@@ -244,18 +246,19 @@ public class VocabularyPopup extends CustomLayoutDialog implements RecognitionLi
     }
 
 
-
     @Override
     public void onError(int error) {
         GeneralUtils.showLog(TAG, "onError " + String.valueOf(error) + " - " + String.valueOf(isRecordSuccess));
         // Sometime onError will get called after onResults so we keep a boolean to ignore error also
-        if(isRecordSuccess){
+        if (isRecordSuccess) {
             return;
-        }else {
+        } else {
 
             if (pDialog != null) {
                 pDialog.dismissWithAnimation();
-                Toast.makeText(mContext, "Error: " + error, Toast.LENGTH_SHORT).show();
+                if (mContext instanceof MainActivity) {
+                    ((MainActivity) mContext).showToast(mContext.getResources().getString(R.string.vocabulary_read_word_prompt_string) + StringConstants.SPACE + StringConstants.QUOTE + SecurityUtils.decodeString(mVocabularyModel.getWord()) + StringConstants.QUOTE);
+                }
             }
         }
     }
@@ -263,20 +266,19 @@ public class VocabularyPopup extends CustomLayoutDialog implements RecognitionLi
     @Override
     public void onResults(Bundle results) {
         isRecordSuccess = true;
-        String tVocabulary =SecurityUtils.decodeString(mVocabularyModel.getWord());
+        String tVocabulary = SecurityUtils.decodeString(mVocabularyModel.getWord());
         ArrayList<String> matches = results
                 .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
         String tStrResult = matches.get(0);
-        if ((tVocabulary.toLowerCase().trim()).equals(tStrResult.toLowerCase().trim())){
-            pDialog.setTitleText("Success!")
+        if ((tVocabulary.toLowerCase().trim()).equals(tStrResult.toLowerCase().trim())) {
+            pDialog.setTitleText("Well done!")
                     .setConfirmText("OK")
                     .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
-        }else{
+        } else {
             pDialog.setTitleText("Not match!\nYou speak: " + tStrResult + "\nThe word: " + tVocabulary)
                     .setConfirmText("OK")
                     .changeAlertType(SweetAlertDialog.ERROR_TYPE);
         }
-
 
 
     }

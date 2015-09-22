@@ -3,6 +3,7 @@ package challenges.sutrix.androidappnetclient.activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Locale;
@@ -33,7 +35,7 @@ import challenges.sutrix.androidappnetclient.listener.RecyclerItemClickListener;
 import challenges.sutrix.androidappnetclient.utils.GeneralUtils;
 import challenges.sutrix.androidappnetclient.utils.KeyboardUtils;
 
-public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnInitListener{
+public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnInitListener {
     private Toast mToast;
     private static final String TAG = "BaseActivity";
 
@@ -50,7 +52,6 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
     private ActionBarDrawerToggle mDrawerToggle;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,10 +59,11 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
         titles = getResources().getStringArray(R.array.menu_array_string);
     }
+
     /**
      * Init navigation drawer
      */
-    protected void initNavigationDrawer(){
+    protected void initNavigationDrawer() {
 
         Toolbar mToolBar = (Toolbar) findViewById(R.id.card_tool_bar);
         setSupportActionBar(mToolBar);
@@ -85,41 +87,44 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
                             mAdapter.setSelected(position);
                             Fragment tCurrentFragment = getCurrentFragment();
                             Fragment tFragment = null;
+
+                            clearAllBackStackFragment();
+
                             switch (position) {
                                 case 1:
-                                    if(!(tCurrentFragment instanceof OverviewFragment)) {
+                                    if (!(tCurrentFragment instanceof OverviewFragment)) {
                                         tFragment = new OverviewFragment();
-                                        replaceFragment(tFragment, true);
+                                        replaceFragmentFadeAnimation(tFragment, true);
                                     }
                                     break;
                                 case 2:
-                                    if(!(tCurrentFragment instanceof VocabularyCategoryFragment)) {
+                                    if (!(tCurrentFragment instanceof VocabularyCategoryFragment)) {
                                         tFragment = new VocabularyCategoryFragment();
-                                        replaceFragment(tFragment, true);
+                                        replaceFragmentFadeAnimation(tFragment, true);
                                     }
                                     break;
                                 case 3:
-                                    if(!(tCurrentFragment instanceof GrammarFragment)) {
+                                    if (!(tCurrentFragment instanceof GrammarFragment)) {
                                         tFragment = new GrammarFragment();
-                                        replaceFragment(tFragment, true);
+                                        replaceFragmentFadeAnimation(tFragment, true);
                                     }
                                     break;
                                 case 4:
-                                    if(!(tCurrentFragment instanceof ListeningFragment)) {
+                                    if (!(tCurrentFragment instanceof ListeningFragment)) {
                                         tFragment = new ListeningFragment();
-                                        replaceFragment(tFragment, true);
+                                        replaceFragmentFadeAnimation(tFragment, true);
                                     }
                                     break;
                                 case 5:
-                                    if(!(tCurrentFragment instanceof ReadingFragment)) {
+                                    if (!(tCurrentFragment instanceof ReadingFragment)) {
                                         tFragment = new ReadingFragment();
-                                        replaceFragment(tFragment, true);
+                                        replaceFragmentFadeAnimation(tFragment, true);
                                     }
                                     break;
                                 case 6:
-                                    if(!(tCurrentFragment instanceof ExaminationFragment)) {
+                                    if (!(tCurrentFragment instanceof ExaminationFragment)) {
                                         tFragment = new ExaminationFragment();
-                                        replaceFragment(tFragment, true);
+                                        replaceFragmentFadeAnimation(tFragment, true);
                                     }
                                     break;
                                 default:
@@ -162,9 +167,16 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
      *
      * @param message String message to show
      */
-    protected void showToast(String message) {
+    public void showToast(String message) {
         mToast.cancel();
         mToast = Toast.makeText(MyApplication.getContext(), message, Toast.LENGTH_SHORT);
+        TextView tv = new TextView(this);
+        tv.setText(message);
+        tv.setTextSize(17);
+        tv.setPadding(8, 8, 8, 8);
+        tv.setTextColor(getResources().getColor(R.color.light_blue));
+        tv.setBackgroundResource(R.drawable.bg_grey_border_blue_radius);
+        mToast.setView(tv);
         mToast.show();
     }
 
@@ -176,6 +188,13 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
     public void showToast(int stringID) {
         mToast.cancel();
         mToast = Toast.makeText(MyApplication.getContext(), stringID, Toast.LENGTH_SHORT);
+        TextView tv = new TextView(this);
+        tv.setText(stringID);
+        tv.setTextSize(17);
+        tv.setPadding(8, 8, 8, 8);
+        tv.setTextColor(getResources().getColor(R.color.light_blue));
+        tv.setBackgroundResource(R.drawable.bg_grey_border_blue_radius);
+        mToast.setView(tv);
         mToast.show();
     }
 
@@ -211,6 +230,30 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
     }
 
     /**
+     * Replace fragment
+     *
+     * @param sFragment    fragment
+     * @param isAddToStack a flag to check if the replaced one is add to the back stack.
+     */
+    public void replaceFragmentFadeAnimation(Fragment sFragment, boolean isAddToStack) {
+        // Hide keyboard if it is showed
+        KeyboardUtils.hideKeyboard(this);
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        if (isAddToStack) {
+            transaction.addToBackStack(null);
+        }
+
+        //Replace current fragment by sFragment with custom animation.
+        transaction
+                .setCustomAnimations(R.anim.abc_fade_in,
+                        R.anim.abc_fade_out, R.anim.abc_fade_in,
+                        R.anim.abc_fade_out)
+                .replace(R.id.main_fragment_container, sFragment).commit();
+    }
+
+    /**
      * Add first fragment
      *
      * @param sFragment fragment to adding to the layout
@@ -221,7 +264,7 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        if(!(sFragment instanceof MainFragment)){
+        if (!(sFragment instanceof MainFragment)) {
             transaction.addToBackStack(null);
         }
         transaction
@@ -242,8 +285,8 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-           showToast("Setting is click");
-            Intent intent = new Intent(this,SampleCustomDialogActivity.class);
+            showToast("Setting is click");
+            Intent intent = new Intent(this, SampleCustomDialogActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.move_right_in, R.anim.move_left_out);
             return true;
@@ -251,21 +294,51 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
         return super.onOptionsItemSelected(item);
     }
 
+    private boolean doubleBackToExitPressedOnce = false;
+
     @Override
     public void onBackPressed() {
-        if (getSupportFragmentManager().getBackStackEntryCount() < 2) {
-            //Finish activity if the number of fragments in the back-stack is 0
-            finish();
+        if (this instanceof MainActivity) {
+            if (getSupportFragmentManager().getBackStackEntryCount() < 2) {
+                //Finish activity if the number of fragments in the back-stack is 0
+                //Get current fragment
+                Fragment tCurrentFragment = getCurrentFragment();
+
+                //If current fragment is overview fragment -> double click to exit application.
+                if (tCurrentFragment instanceof OverviewFragment) {
+                    if (doubleBackToExitPressedOnce) {
+                        finish();
+                        return;
+                    }
+                    this.doubleBackToExitPressedOnce = true;
+                    showToast(R.string.back_again_to_finish);
+
+                    new Handler().postDelayed(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            doubleBackToExitPressedOnce = false;
+                        }
+                    }, 2000);
+                } else {
+                    // else : return to overview fragment
+                    clearAllBackStackFragment();
+                    replaceFragmentFadeAnimation(new OverviewFragment(), true);
+                }
+            } else {
+                //Get current fragment
+                Fragment tCurrentFragment = getCurrentFragment();
+
+                KeyboardUtils.hideKeyboard(this);
+                FragmentManager fm = this.getSupportFragmentManager();
+                fm.popBackStackImmediate();
+
+                //set selected menu item
+                mAdapter.setSelectedOnBackPress(tCurrentFragment);
+            }
         } else {
-            //Get current fragment
-            Fragment tFragment = getCurrentFragment();
-
-            KeyboardUtils.hideKeyboard(this);
-            FragmentManager fm = this.getSupportFragmentManager();
-            fm.popBackStackImmediate();
-
-            //set selected menu item
-            mAdapter.setSelectedOnBackPress(tFragment);
+            super.onBackPressed();
+            overridePendingTransition(R.anim.move_right_in, R.anim.move_left_out);
         }
     }
 
@@ -273,36 +346,36 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
         return getSupportFragmentManager().findFragmentById(R.id.main_fragment_container);
     }
 
-    public void setSlideMenuSelected(int position){
+    public void setSlideMenuSelected(int position) {
         mAdapter.setSelected(position);
     }
 
-    public void refreshSlideMenu(){
+    public void refreshSlideMenu() {
         mAdapter.refreshSlideMenu();
     }
 
     @Override
     public void onInit(int i) {
-        if(mNotificationVoice !=null )
-        {
+        if (mNotificationVoice != null) {
             mNotificationVoice.setLanguage(Locale.US);
             mNotificationVoice.stop();
-        }else{
+        } else {
             showToast(R.string.error_text_to_speech_string);
         }
     }
 
     /**
      * Speak the giving text
+     *
      * @param text
      */
     public void speak(String text) {
-            if (mNotificationVoice != null) {
-                mNotificationVoice.stop();
-                mNotificationVoice.speak(text, TextToSpeech.QUEUE_FLUSH, null);
-            } else {
-                showToast(R.string.error_text_to_speech_string);
-            }
+        if (mNotificationVoice != null) {
+            mNotificationVoice.stop();
+            mNotificationVoice.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+        } else {
+            showToast(R.string.error_text_to_speech_string);
+        }
     }
 
     @Override
@@ -314,7 +387,7 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
     @Override
     protected void onStop() {
-        if(mNotificationVoice != null) {
+        if (mNotificationVoice != null) {
             mNotificationVoice.shutdown();
         }
         GeneralUtils.showLog(TAG, "onStop");
@@ -325,10 +398,10 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
      * Init TextToSpeech.
      * We need to put it in the background task because it a time-consuming task
      * and will block UI if it is executed in UI thread.
-     *
      */
-    private class InitTextToSpeech extends AsyncTask<Void,Void, TextToSpeech> implements TextToSpeech.OnInitListener{
+    private class InitTextToSpeech extends AsyncTask<Void, Void, TextToSpeech> implements TextToSpeech.OnInitListener {
         TextToSpeech notification;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -350,6 +423,17 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
         @Override
         public void onInit(int i) {
             onPostExecute(notification);
+        }
+    }
+
+    /**
+     * Clear all fragment in the back-stack.
+     */
+    private void clearAllBackStackFragment() {
+        FragmentManager fm = getSupportFragmentManager();
+        int count = fm.getBackStackEntryCount();
+        for (int i = 0; i < count; ++i) {
+            fm.popBackStackImmediate();
         }
     }
 }

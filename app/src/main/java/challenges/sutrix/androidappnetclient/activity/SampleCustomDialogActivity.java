@@ -198,4 +198,9 @@ public class SampleCustomDialogActivity extends BaseActivity implements View.OnC
         sweetAlertDialog.dismissWithAnimation();
 //        Toast.makeText(this, "Button " + isConfirmed + " click - checkbox = " + isRememberPopupChecked, Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }

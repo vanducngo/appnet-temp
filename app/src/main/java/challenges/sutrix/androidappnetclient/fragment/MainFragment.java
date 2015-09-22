@@ -29,7 +29,7 @@ import challenges.sutrix.androidappnetclient.activity.MainActivity;
 import challenges.sutrix.androidappnetclient.R;
 import challenges.sutrix.androidappnetclient.function.overview.OverviewFragment;
 import challenges.sutrix.androidappnetclient.utils.ConnectionUtils;
-import challenges.sutrix.androidappnetclient.utils.Constants;
+import challenges.sutrix.androidappnetclient.utils.StringConstants;
 import challenges.sutrix.androidappnetclient.utils.PreferenceUtils;
 
 /**
@@ -110,7 +110,7 @@ public class MainFragment extends Fragment implements FacebookCallback<LoginResu
         if (view.equals(mLoginBtn)) {
             if (ConnectionUtils.isInternetAvailable(getActivity())) {
                 LoginManager.getInstance().logOut();
-                LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList(Constants.FACEBOOK_PERMISSION));
+                LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList(StringConstants.FACEBOOK_PERMISSION));
             }
         }
     }
