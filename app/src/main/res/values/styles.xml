@@ -61,4 +61,13 @@
         <item name="android:background">@drawable/bg_white_border_grey</item>
     </style>
 
+    <style name="vocabulary_general_layout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">@dimen/vocabulary_item_layout_size</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:background">@drawable/bg_white_border_grey</item>
+    </style>
+
 </resources>

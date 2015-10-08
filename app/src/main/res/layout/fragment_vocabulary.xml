@@ -9,7 +9,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="Vocabulary"
+        android:text="@string/vocabulary_words_subject_string"
+        android:padding="5dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <ListView

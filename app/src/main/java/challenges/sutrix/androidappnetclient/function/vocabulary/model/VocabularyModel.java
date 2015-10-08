@@ -167,4 +167,12 @@ public class VocabularyModel extends Model{
                 .orderBy("id ASC")
                 .execute();
     }
+
+    public static List<VocabularyModel> getRememberedVocabularies(){
+        return new Select()
+                .from(VocabularyModel.class)
+                .where("remember > ?",0)
+                .orderBy("id ASC")
+                .execute();
+    }
 }

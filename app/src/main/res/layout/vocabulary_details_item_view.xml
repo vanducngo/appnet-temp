@@ -46,5 +46,5 @@
         android:layout_centerVertical="true"
         android:checked="false"
             android:layout_marginRight="5dp"
-        android:text="@string/is_remembered_string" />
+        android:text="@string/vocabulary_is_remembered_string" />
 </RelativeLayout>

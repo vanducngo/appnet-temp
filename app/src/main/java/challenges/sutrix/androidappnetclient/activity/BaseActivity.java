@@ -30,7 +30,7 @@ import challenges.sutrix.androidappnetclient.function.grammar.GrammarFragment;
 import challenges.sutrix.androidappnetclient.function.listening.ListeningFragment;
 import challenges.sutrix.androidappnetclient.function.overview.OverviewFragment;
 import challenges.sutrix.androidappnetclient.function.reading.ReadingFragment;
-import challenges.sutrix.androidappnetclient.function.vocabulary.VocabularyCategoryFragment;
+import challenges.sutrix.androidappnetclient.function.vocabulary.VocabularyGeneralFragment;
 import challenges.sutrix.androidappnetclient.listener.RecyclerItemClickListener;
 import challenges.sutrix.androidappnetclient.utils.GeneralUtils;
 import challenges.sutrix.androidappnetclient.utils.KeyboardUtils;
@@ -88,8 +88,6 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
                             Fragment tCurrentFragment = getCurrentFragment();
                             Fragment tFragment = null;
 
-                            clearAllBackStackFragment();
-
                             switch (position) {
                                 case 1:
                                     if (!(tCurrentFragment instanceof OverviewFragment)) {
@@ -98,8 +96,8 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
                                     }
                                     break;
                                 case 2:
-                                    if (!(tCurrentFragment instanceof VocabularyCategoryFragment)) {
-                                        tFragment = new VocabularyCategoryFragment();
+                                    if (!(tCurrentFragment instanceof VocabularyGeneralFragment)) {
+                                        tFragment = new VocabularyGeneralFragment();
                                         replaceFragmentFadeAnimation(tFragment, true);
                                     }
                                     break;
@@ -239,6 +237,8 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
         // Hide keyboard if it is showed
         KeyboardUtils.hideKeyboard(this);
 
+        clearAllBackStackFragment();//Clear all fragment in the back stack
+
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         if (isAddToStack) {
@@ -322,7 +322,6 @@ public class BaseActivity extends ActionBarActivity implements TextToSpeech.OnIn
                     }, 2000);
                 } else {
                     // else : return to overview fragment
-                    clearAllBackStackFragment();
                     replaceFragmentFadeAnimation(new OverviewFragment(), true);
                 }
             } else {
